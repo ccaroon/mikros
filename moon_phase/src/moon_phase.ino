@@ -24,7 +24,7 @@ void setup()
     display.begin();
     display.setFont(liberationSans_12ptFontInfo);
 //  display.fontColor(rand()%4096, 0x00);
-    display.fontColor(0xFF, 0x00);
+    display.fontColor(0x1c, 0x00);
     
     drawCircle(48,32,30);
 }
@@ -135,13 +135,13 @@ void displayInfo () {
 }
 
 void moonPhase () {
-    char output[8];
+    char output[12];
     double phase;
 
     RTC.readTime();
     
-    display.setCursor(27,0);
-    sprintf(output, " %02d:%02d  ", RTC.getHours(), RTC.getMinutes());
+    display.setCursor(17,0);
+    sprintf(output, " %02d:%02d:%02d  ", RTC.getHours(), RTC.getMinutes(), RTC.getSeconds());
     display.print(output);
     
     phase = moon_phase((int)RTC.getYears(), (int)RTC.getMonths(), (int)RTC.getDays(), (double)RTC.getHours()+5);
@@ -152,7 +152,7 @@ void moonPhase () {
     display.setCursor(30,24);
     display.print(phase);
     
-    delay(60 * 1000);
+    delay(1000);
 }
 
 void loop()
