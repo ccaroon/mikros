@@ -574,4 +574,3 @@ DS1337::DS1337() : DSRTCLib(2, 0)
 DS1337::DS1337(int int_pin, int int_number) : DSRTCLib(int_pin, int_number)
 {
 }
-
