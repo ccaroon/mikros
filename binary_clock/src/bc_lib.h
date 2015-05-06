@@ -9,6 +9,6 @@
 
 #define Y_OFFSET      6 
 
-void getDigits(int value, int* digits);
-void digitToBinary(int digit, int* binary);
-void updateTime(int place, int value);
+void getDigits(unsigned char value, unsigned char* digits);
+void digitToBinary(unsigned char digit, unsigned char* binary);
+void updateTime(unsigned char place, unsigned char value);

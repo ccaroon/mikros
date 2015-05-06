@@ -1,6 +1,5 @@
 #include "Charliplexing.h"
 #include "RTCLIb.h"
-
 #include "bc_lib.h"
 
 DS1339 RTC = DS1339();
@@ -22,9 +21,9 @@ void setup() {
 void loop() {
     RTC.readTime();
 
-    updateTime(HOURS_PLACE,   (int)RTC.getHours());
-    updateTime(MINUTES_PLACE, (int)RTC.getMinutes());
-    updateTime(SECONDS_PLACE, (int)RTC.getSeconds());
+    updateTime(HOURS_PLACE,   RTC.getHours());
+    updateTime(MINUTES_PLACE, RTC.getMinutes());
+    updateTime(SECONDS_PLACE, RTC.getSeconds());
 
-    delay(750);
+    delay(1000);
 }
