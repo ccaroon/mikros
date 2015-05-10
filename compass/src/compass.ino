@@ -1,20 +1,28 @@
 #include "Charliplexing.h"
 #include "TinyCompass.h"
 
-#define N  0
-#define NE 45
-#define E  90
-#define SE 135
-#define S  180
-#define SW 225
-#define W  270
-#define NW 315
+#include "indicators.h"
 
-TinyCompass compass = TinyCompass();
+TinyCompass compass = TinyCompass(false);
+
+
+void selfTest() {
+    LedSign::Clear(1);
+    delay(1000);
+    LedSign::Clear(0);
+    delay(1000);
+
+    for (int i = 0; i < 360; i+=45) {
+        indicateSimpleDirection(i);
+        delay(1000);
+    }
+}
 
 void setup() {
     LedSign::Init();
     compass.init();
+
+    selfTest();
 }
 
 void loop() {
@@ -23,42 +31,59 @@ void loop() {
     compass.read();
 
     degrees = compass.getDegrees();
+
     LedSign::Clear(0);
-    if (degrees >= N and degrees < NE) {
-        LedSign::Set(2,0,1);
-        LedSign::Set(3,0,1);
+
+    // uint8_t led = degrees / 20;
+    // ledOn(led);
+
+    if (degrees >= CP_1 && degrees <= CP_2) {
+        indicateSimpleDirection(CP_1);
     }
-    else if (degrees >= NE && degrees <= E) {
-        LedSign::Set(5,3,1);
-        LedSign::Set(5,4,1);
-        LedSign::Set(5,5,1);
+    else if (degrees > CP_2 && degrees <= CP_3) {
+        indicateSimpleDirection(CP_3);
     }
-    else if (degrees > E && degrees < SE) {
-        LedSign::Set(5,3,1);
-        LedSign::Set(5,4,1);
-        LedSign::Set(5,5,1);
+    else if (degrees > CP_3 && degrees <= CP_4) {
+        indicateSimpleDirection(CP_3);
     }
-    else if (degrees >= SE && degrees <= S) {
-        LedSign::Set(2,8,1);
-        LedSign::Set(3,8,1);
+    else if (degrees > CP_4 && degrees <= CP_5) {
+        indicateSimpleDirection(CP_5);
     }
-    else if (degrees > S && degrees < SW) {
-        LedSign::Set(2,8,1);
-        LedSign::Set(3,8,1);
+    else if (degrees > CP_5 && degrees <= CP_6) {
+        indicateSimpleDirection(CP_5);
     }
-    else if (degrees >= SW && degrees <= W) {
-        LedSign::Set(0,3,1);
-        LedSign::Set(0,4,1);
-        LedSign::Set(0,5,1);
+    else if (degrees > CP_6 && degrees <= CP_7) {
+        indicateSimpleDirection(CP_7);
     }
-    else if (degrees > W && degrees < NW) {
-        LedSign::Set(0,3,1);
-        LedSign::Set(0,4,1);
-        LedSign::Set(0,5,1);
+    else if (degrees > CP_7 && degrees <= CP_8) {
+        indicateSimpleDirection(CP_7);
     }
-    else if (degrees >= NW && degrees < 360) {
-        LedSign::Set(2,0,1);
-        LedSign::Set(3,0,1);
+    else if (degrees > CP_8 && degrees <= CP_9) {
+        indicateSimpleDirection(CP_9);
+    }
+    else if (degrees > CP_9 && degrees <= CP_10) {
+        indicateSimpleDirection(CP_9);
+    }
+    else if (degrees > CP_10 && degrees <= CP_11) {
+        indicateSimpleDirection(CP_11);
+    }
+    else if (degrees > CP_11 && degrees <= CP_12) {
+        indicateSimpleDirection(CP_11);
+    }
+    else if (degrees > CP_12 && degrees <= CP_13) {
+        indicateSimpleDirection(CP_13);
+    }
+    else if (degrees > CP_13 && degrees <= CP_14) {
+        indicateSimpleDirection(CP_13);
+    }
+    else if (degrees > CP_14 && degrees <= CP_15) {
+        indicateSimpleDirection(CP_15);
+    }
+    else if (degrees > CP_15 && degrees <= CP_16) {
+        indicateSimpleDirection(CP_15);
+    }
+    else if (degrees > CP_16) {
+        indicateSimpleDirection(CP_1);
     }
     
     delay(250);
