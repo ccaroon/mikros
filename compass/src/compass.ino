@@ -3,7 +3,7 @@
 
 #include "indicators.h"
 
-TinyCompass compass = TinyCompass(false);
+TinyCompass compass = TinyCompass();
 
 
 void selfTest() {
@@ -14,7 +14,7 @@ void selfTest() {
 
     for (int i = 0; i < 360; i+=45) {
         indicateSimpleDirection(i);
-        delay(1000);
+        delay(250);
     }
 }
 
@@ -88,7 +88,3 @@ void loop() {
     
     delay(250);
 }
-
-
-
-
