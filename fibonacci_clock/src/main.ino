@@ -53,9 +53,11 @@ void numberToFibSquares(uint8_t number, uint8_t* squares, uint8_t color) {
             break;
     }
 
-    for (i = 0; i < MAX_COMBOS; i++) {
-        if (fibMap[number][choice][i] != EMPTY) {
-            squares[fibMap[number][choice][i]] += color;
+    if (number > 0) {
+        for (i = 0; i < MAX_COMBOS; i++) {
+            if (fibMap[number][choice][i] != EMPTY) {
+                squares[fibMap[number][choice][i]] += color;
+            }
         }
     }
 }
@@ -65,7 +67,16 @@ void setup() {
     display.begin();
     Serial.begin(9600);
 
-    randomSeed(analogRead(0));
+    srand(analogRead(0));
+}
+
+void printSquares(uint8_t* squares) {
+    for (uint8_t i = 0; i < 5; i++) {
+        Serial.print("(");
+        Serial.print(squares[i]);
+        Serial.print(") ");
+    }
+    Serial.println("");
 }
 
 void loop() {
@@ -81,9 +92,9 @@ void loop() {
     minutes = RTC.getMinutes();
     minutes /= 5;
 
-    memset(squares, 0, 5);
-    numberToFibSquares(hours,   squares, YELLOW);
-    numberToFibSquares(minutes, squares, BLUE);
+    memset(squares, 0, 5*sizeof(uint8_t));
+    numberToFibSquares(hours,   squares, COLOR_HOURS);
+    numberToFibSquares(minutes, squares, COLOR_MINUTES);
 
     drawSquare(&one,      squares[ONE]);
     drawSquare(&onePrime, squares[ONE_PRIME]);

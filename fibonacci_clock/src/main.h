@@ -5,15 +5,15 @@
 #define FIVE      4
 #define EMPTY     255
 
-#define WHITE  0
-#define YELLOW 1
-#define BLUE   2
-#define GREEN  3 // YELLOW + BLUE = GREEN :)
+#define COLOR_HOURS   1
+#define COLOR_MINUTES 2
 
 #define UNIT_SIZE 12 //In pixels
 
-// ------------------- white, yellow, blue, green
-uint8_t colorMap[4] = {0xFF,  0x1F,   0xE0, 0x1C};
+// Set your preferred colors here
+// ------------------- OFF,   HOURS,  MINUTES, BOTH
+// ------------------- WHITE, YELLOW, BLUE,    GREEN
+uint8_t colorMap[4] = {0xFF,  0x1F,   0xE0,    0x1C};
 
 typedef struct {
     uint8_t x;
@@ -30,7 +30,7 @@ const FibSquare five     = {x:36, y:0,  units:5};
 #define MAX_CHOICES 4
 #define MAX_COMBOS  5
 const uint8_t fibMap[13][MAX_CHOICES][MAX_COMBOS] = {
-    // ZERO -> Not used
+    // ZERO => Placeholder, not used, makes indexing easier
     {},
     // ONE =>  1 | 1`
     {
