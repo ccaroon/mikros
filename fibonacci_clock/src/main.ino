@@ -1,5 +1,7 @@
-#include "TinyScreen.h"
 #include "RTCLib.h"
+#include "TinyScreen.h"
+#include <SPI.h>
+#include <Wire.h>
 #include "main.h"
 
 TinyScreen display = TinyScreen(0);
@@ -49,7 +51,7 @@ void numberToFibSquares(uint8_t number, uint8_t* squares, uint8_t color) {
             choice = rand() % 2; // Actual number of choices
             break;
         case 12:
-            choice = 1; // Actual number of choices
+            choice = 0; // Actual number of choices
             break;
     }
 
@@ -63,6 +65,7 @@ void numberToFibSquares(uint8_t number, uint8_t* squares, uint8_t color) {
 }
 
 void setup() {
+    Wire.begin();
     RTC.start();
     display.begin();
     Serial.begin(9600);
@@ -92,6 +95,9 @@ void loop() {
     minutes = RTC.getMinutes();
     minutes /= 5;
 
+    Serial.println(hours);
+    Serial.println(minutes);
+
     memset(squares, 0, 5*sizeof(uint8_t));
     numberToFibSquares(hours,   squares, COLOR_HOURS);
     numberToFibSquares(minutes, squares, COLOR_MINUTES);
@@ -102,7 +108,5 @@ void loop() {
     drawSquare(&three,    squares[THREE]);
     drawSquare(&five,     squares[FIVE]);
 
-    Serial.println(hours);
-    Serial.println(minutes);
     delay(60000);
 }

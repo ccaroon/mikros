@@ -13,7 +13,9 @@
 // Set your preferred colors here
 // ------------------- OFF,   HOURS,  MINUTES, BOTH
 // ------------------- WHITE, YELLOW, BLUE,    GREEN
-uint8_t colorMap[4] = {0xFF,  0x1F,   0xE0,    0x1C};
+// uint8_t colorMap[4] = {0xFF,  0x1F,   0xE0,    0x1C};
+// ------------------- WHITE, YELLOW, BLUE, RED
+uint8_t colorMap[4] = {0xFF,  0x1F,   0xE0, 0x03};
 
 typedef struct {
     uint8_t x;
