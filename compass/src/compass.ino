@@ -1,5 +1,6 @@
 #include "Charliplexing.h"
 #include "TinyCompass.h"
+#include <Wire.h>
 
 #include "indicators.h"
 
