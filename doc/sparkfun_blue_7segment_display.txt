@@ -1,0 +1,10 @@
+Pin Out
+-------
+1: E            10: G
+2: D            9: F
+3: Common Anode 8: Common Anode
+4: C            7: A
+5: DP           6: B
+
+Set pin to LOW to turn segment on.
+
