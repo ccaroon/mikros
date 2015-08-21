@@ -1,22 +1,36 @@
-#define SEG_A 3
-#define SEG_B 4
-#define SEG_C 6
-#define SEG_D 7
-#define SEG_E 5
-#define SEG_F 2
-#define SEG_G 1
-#define SEG_DP 0
+// Connections
+// 7-Segement Display (PIN) ---> Shift Register (PIN)
+// --------------------------------------------------
+// ### TOP
+// * G   (1) ---> Q1 (1)
+// * F   (2) ---> Q2 (2)
+// * GND (3) ---> N/A (connected to GND)
+// * A   (4) ---> Q3 (3)
+// * B   (5) ---> Q4 (4)
+// ### BOTTOM
+// * E   (6) ---> Q5 (5)
+// * D   (7) ---> Q6 (6)
+// * GND (8) ---> N/A (connected to GND)
+// * C   (9) ---> Q7 (7)
+// * DP (10) ---> Q0 (15)
 
-const int latchPin = 8;
-const int clockPin = 12;
-const int dataPin  = 11;
+const uint8_t latchPin = 8;
+const uint8_t clockPin = 12;
+const uint8_t dataPin  = 11;
 
-//             DCEBAFG.
-#define ZERO  B00000011
-#define ONE   B10101111
-#define TWO   B01000101
-//             DCEBAFG.
-#define THREE B00100101
+// CDEBAFG.
+const byte digits[10] = {
+    B00000011,
+    B01101111,
+    B10000101,
+    B00100101,
+    B01101001,
+    B00110001,
+    B00011001,
+    B01100111,
+    B00000001,
+    B01100001
+};
 
 void closeLatch() {
     digitalWrite(latchPin, LOW);
@@ -42,17 +56,12 @@ void setup() {
     pinMode(clockPin, OUTPUT);
 }
 
-int pin = 0;
 void loop() {
     byte data[1];
 
-    data[0] = THREE;
-    // bitWrite(data[0], pin++, 0);
-    // sendData(data, 1);
-    sendData(data, 1);
-    // if (pin > 7) {
-    //     pin = 0;
-    // }
-
-    delay(5000);
+    for (int i = 9; i >= 0; i--) {
+        data[0] = digits[i];
+        sendData(data, 1);
+        delay(1000);
+    }
 }
