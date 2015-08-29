@@ -1,0 +1,12 @@
+Particle PØ Wi-Fi module
+    Broadcom BCM43362 Wi-Fi chip
+    802.11b/g/n Wi-Fi
+    STM32F205 120Mhz ARM Cortex M3
+    1MB flash, 128KB RAM
+On-board RGB status LED (ext. drive provided)
+18 Mixed-signal GPIO and advanced peripherals
+Open source design
+Real-time operating system (FreeRTOS)
+Soft AP setup
+FCC, CE and IC certified
+

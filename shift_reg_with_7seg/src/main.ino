@@ -57,11 +57,25 @@ void setup() {
 }
 
 void loop() {
-    byte data[1];
+    byte data[2];
 
-    for (int i = 9; i >= 0; i--) {
-        data[0] = digits[i];
-        sendData(data, 1);
-        delay(1000);
+    // unsigned long secs = millis() * 1000;
+    // int digit1 = secs / 99;
+    // int digit2 = secs % 99;
+
+    // data[0] = digits[digit1];
+    // data[1] = digits[digit2];
+    // sendData(data, 2);
+    // delay(1000);
+
+    for (int i = 0; i <= 9; i++) {
+        for (int j = 0; j <= 9; j++) {
+            data[0] = digits[i];
+            data[1] = digits[j];
+            sendData(data, 2);
+            delay(1000);
+        }
     }
+
+    delay(5000);
 }
