@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -16,6 +16,8 @@
  * This example shows how to use TinyCircuits CC3000 shield
  * to connect your project to Blynk.
  * Feel free to apply it to any other example. It's simple!
+ *
+ * Note: Firmware version 1.14 or later is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  *

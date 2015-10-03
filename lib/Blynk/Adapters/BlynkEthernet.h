@@ -18,7 +18,6 @@
 #include <BlynkApiArduino.h>
 #include <Blynk/BlynkProtocol.h>
 #include <Adapters/BlynkArduinoClient.h>
-#include <Ethernet.h>
 
 static const byte _blynkEthernetMac[] = { 0xDE, 0xED, 0xBA, 0xFE, 0xFE, 0xED };
 
@@ -30,6 +29,22 @@ public:
     BlynkEthernet(BlynkArduinoClient& transp)
         : Base(transp)
     {}
+
+    void config(const char* auth,
+                const char* domain = BLYNK_DEFAULT_DOMAIN,
+                uint16_t    port   = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(domain, port);
+    }
+
+    void config(const char* auth,
+                IPAddress   ip,
+                uint16_t    port = BLYNK_DEFAULT_PORT)
+    {
+        Base::begin(auth);
+        this->conn.begin(ip, port);
+    }
 
     // DHCP with domain
     void begin( const char* auth,
@@ -90,7 +105,7 @@ public:
     // DHCP with server IP
     void begin( const char* auth,
                 IPAddress addr,
-                uint16_t port,
+                uint16_t port    = BLYNK_DEFAULT_PORT,
                 const byte mac[] = _blynkEthernetMac)
     {
         Base::begin(auth);

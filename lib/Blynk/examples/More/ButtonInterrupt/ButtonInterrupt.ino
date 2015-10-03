@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -38,14 +38,14 @@ void setup()
   // Make pin 2 HIGH by default
   pinMode(2, INPUT_PULLUP);
   // Attach INT to our handler
-  attachInterrupt(0, checkPin, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(2), checkPin, CHANGE);
 }
 
 void checkPin()
 {
   // Invert state, since button is "Active LOW"
   int state = !digitalRead(2);
-  Blynk.virtualWrite(1, state);
+  Blynk.virtualWrite(V1, state);
 }
 
 void loop()

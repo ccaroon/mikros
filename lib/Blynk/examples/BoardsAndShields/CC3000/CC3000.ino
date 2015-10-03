@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -19,6 +19,8 @@
  *
  * For this example you need Adafruit_CC3000_Library library:
  *   https://github.com/adafruit/Adafruit_CC3000_Library
+ *
+ * Note: Firmware version 1.14 or later is preferred.
  *
  * 1. Update pin definitions according to your setup.
  * 2. Change WiFi ssid, pass, and Blynk auth token

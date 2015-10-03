@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -21,6 +21,8 @@
  * and also to install "Combined Arduino Support Package".
  * Please find more information here:
  *   http://shop.wickeddevice.com/resources/wildfire
+ *
+ * Note: Firmware version 1.14 or later is preferred.
  *
  * Change WiFi ssid, pass, and Blynk auth token to run :)
  *

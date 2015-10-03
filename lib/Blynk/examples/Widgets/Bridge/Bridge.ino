@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -15,8 +15,19 @@
  **************************************************************
  * Control another device using Bridge widget!
  *
- * App dashboard setup:
- *   Bridge widget on V1
+ * Bridge is initialized with the token of any (Blynk-enabled) device.
+ * After that, use the familiar functions to control it:
+ *   bridge.digitalWrite(8, HIGH)
+ *   bridge.digitalWrite("A0", LOW) // <- target needs to support "Named pins"
+ *   bridge.analogWrite(3, 123)
+ *   bridge.virtualWrite(V1, "hello")
+ *
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
+ *   https://github.com/jfturcot/SimpleTimer
+ * Visit this page for more information:
+ *   http://playground.arduino.cc/Code/SimpleTimer
+ *
  *
  **************************************************************/
 
@@ -30,7 +41,7 @@
 char auth[] = "YourAuthToken";
 
 // Bridge widget on virtual pin 1
-WidgetBridge bridge1(1);
+WidgetBridge bridge1(V1);
 
 // Timer for blynking
 SimpleTimer timer;
@@ -39,12 +50,14 @@ void setup()
 {
   Blynk.begin(auth);
 
-  if (Blynk.connect()) {
-    bridge1.setAuthToken("OtherAuthToken");
+  while (Blynk.connect() == false) {
+    // Wait until connected
   }
 
-  // Call blynkAnotherDevice periodically
-  timer.setInterval(1000, blynkAnotherDevice);
+  bridge1.setAuthToken("OtherAuthToken");
+
+  // Call blynkAnotherDevice every second
+  timer.setInterval(1000L, blynkAnotherDevice);
 }
 
 static bool value = true;

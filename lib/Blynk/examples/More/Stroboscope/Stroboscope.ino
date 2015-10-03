@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -17,10 +17,12 @@
  * You can turn it on and of using a button,
  * and control frequency with a slider.
  *
- * For this example you need SimpleTimer library:
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
  *   http://playground.arduino.cc/Code/SimpleTimer
+ *
  *
  * App dashboard setup:
  *   Button widget (Switch) on V1
@@ -51,14 +53,14 @@ void setup()
 
   // Configure LED and timer
   pinMode(LED_PIN, OUTPUT);
-  t1 = timer.setInterval(500, ledBlynk);
+  t1 = timer.setInterval(500L, ledBlynk);
   timer.disable(t1);
 }
 
 // Enable/disable blinking using virt pin 1
-BLYNK_WRITE(1)
+BLYNK_WRITE(V1)
 {
-  if (param[0].asInt()) {
+  if (param.asInt()) {
     timer.enable(t1);
   } else {
     timer.disable(t1);
@@ -67,9 +69,9 @@ BLYNK_WRITE(1)
 }
 
 // Change blink interval using virtual pin 2
-BLYNK_WRITE(2)
+BLYNK_WRITE(V2)
 {
-  int interval = param[0].asInt();
+  long interval = param.asLong();
   boolean wasEnabled = timer.isEnabled(t1);
   timer.deleteTimer(t1);
   t1 = timer.setInterval(interval, ledBlynk);

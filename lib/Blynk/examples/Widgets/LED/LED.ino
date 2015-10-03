@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -18,6 +18,13 @@
  * App dashboard setup:
  *   LED widget on V1
  *   LED widget on V2
+ *
+ *
+ * WARNING :
+ * For this example you'll need SimpleTimer library:
+ *   https://github.com/jfturcot/SimpleTimer
+ * Visit this page for more information:
+ *   http://playground.arduino.cc/Code/SimpleTimer
  *
  **************************************************************/
 
@@ -41,8 +48,12 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
-  timer.setInterval(1000, blinkLedWidget);
-  timer.setInterval(200, fadeLedWidget);
+  while (Blynk.connect() == false) {
+    // Wait until connected
+  }
+
+  timer.setInterval(1000L, blinkLedWidget);
+  timer.setInterval(200L, fadeLedWidget);
 }
 
 void blinkLedWidget()

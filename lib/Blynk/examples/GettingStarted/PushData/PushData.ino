@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -16,6 +16,7 @@
  * This example shows how value can be pushed from Arduino to
  * the Blynk App.
  *
+ * WARNING :
  * For this example you'll need SimpleTimer library:
  *   https://github.com/jfturcot/SimpleTimer
  * Visit this page for more information:
@@ -43,8 +44,8 @@ void setup()
   Serial.begin(9600); // See the connection status in Serial Monitor
   Blynk.begin(auth);
 
-  // Setup function to be called each 1000 milliseconds
-  timer.setInterval(1000, sendUptime);
+  // Setup a function to be called every second
+  timer.setInterval(1000L, sendUptime);
 }
 
 // This function sends Arduino's up time every second to Virtual Pin (5).
@@ -54,7 +55,7 @@ void sendUptime()
 {
   // You can send any value at any time.
   // Please don't send more that 10 values per second.
-  Blynk.virtualWrite(5, millis()/1000);
+  Blynk.virtualWrite(V5, millis() / 1000);
 }
 
 void loop()

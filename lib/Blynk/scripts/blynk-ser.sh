@@ -1,4 +1,8 @@
 #!/bin/bash
+# Detect script path
+pushd `dirname $0` > /dev/null
+SCRIPTPATH=`pwd`
+popd > /dev/null
 
 # === Edit default options to match your need ===
 
@@ -14,8 +18,8 @@ SERV_PORT_TCP=8442
 SERV_PORT_2WAY=8443
 LSTN_PORT=8442
 
-SRVR_CERT="certs/server.crt"
-CLNT_CERT="certs/client.pem"
+SRVR_CERT="$SCRIPTPATH/certs/server.crt"
+CLNT_CERT="$SCRIPTPATH/certs/client.pem"
 
 # === Edit the lines below only if absolutely sure what you're doing ===
 
@@ -142,7 +146,7 @@ while true; do
     --cert)
       shift
       if [ -n "$1" ]; then
-        CLNT_CERT=$1
+        SRVR_CERT=$1
         shift
       fi
       ;;
@@ -155,7 +159,7 @@ while true; do
 done
 
 # Construct command
-GEN_ATTR="-d -d -T 15"
+GEN_ATTR="-d -d"
 
 TCP_ATTR="nodelay" #,nonblock=1,rcvtimeo=1,sndtimeo=1
 SER_ATTR="raw,echo=0,clocal=1,cs8,nonblock=1"
@@ -223,11 +227,11 @@ fi
 
 while [ 1 ]; do
     echo Connecting: "$FROM_ATTR <-> $TO_ATTR"
-    
+
     socat $GEN_ATTR $FROM_ATTR $TO_ATTR
-    
+
     detect_conflicts
-    
+
     echo Reconnecting in 3s...
     sleep 3
 done

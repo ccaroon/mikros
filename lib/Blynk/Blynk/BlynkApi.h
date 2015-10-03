@@ -28,6 +28,40 @@ public:
         Init();
     }
 
+#ifdef DOXYGEN // These API here are only for the documentation
+
+    /**
+     * Connects to the server.
+     * Blocks until connected or timeout happens.
+     * May take less or more then timeout value.
+     *
+     * @param timeout    Connection timeout
+     * @returns          True if connected to the server
+     */
+    bool connect(unsigned long timeout = BLYNK_TIMEOUT_MS*3);
+
+    /**
+     * Disconnects from the server.
+     * It will not try to reconnect, until connect() is called
+     */
+    void disconnect();
+
+    /**
+     * @returns          True if connected to the server
+     */
+    bool connected();
+
+    /**
+     * Performs Blynk-related housekeeping
+     * and processes incoming commands
+     *
+     * @param available  True if there is incoming data to process
+     *                   Only used when user manages connection manually.
+     */
+    bool run(bool available = false);
+
+#endif // DOXYGEN
+
     /**
      * Sends value to a Virtual Pin
      *
@@ -41,7 +75,7 @@ public:
         cmd.add("vw");
         cmd.add(pin);
         cmd.add(data);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -74,11 +108,12 @@ public:
      *
      * @param msg Text of the message
      */
-    void tweet(const char* msg) {
-        size_t len = strlen(msg);
-        if (len < 140) {
-            static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, msg, len+1);
-        }
+    template<typename T>
+    void tweet(const T& msg) {
+        char mem[128];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_TWEET, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -86,25 +121,12 @@ public:
      *
      * @param msg Text of the message
      */
-    void push_notification(const char* msg) {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_PUSH_NOTIFICATION, 0, msg, strlen(msg)+1);
-    }
-
-    /**
-     * Sends an pre-defined email message
-     * The message is defined in the App
-     */
-    void email() {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0);
-    }
-
-    /**
-     * Sends an email message
-     *
-     * @param msg Text of the message
-     */
-    void email(const char* msg) {
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, msg, strlen(msg)+1);
+    template<typename T>
+    void notify(const T& msg) {
+        char mem[128];
+        BlynkParam cmd(mem, 0, sizeof(mem));
+        cmd.add(msg);
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_NOTIFY, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -114,13 +136,14 @@ public:
      * @param subject Subject of message
      * @param msg     Text of the message
      */
-    void email(const char* email, const char* subject, const char* msg) {
+    template <typename T1, typename T2>
+    void email(const char* email, const T1& subject, const T2& msg) {
         char mem[128];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(email);
         cmd.add(subject);
         cmd.add(msg);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_EMAIL, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
 #if defined(BLYNK_EXPERIMENTAL)
@@ -155,7 +178,7 @@ public:
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("vr");
         cmd.add(pin);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -167,13 +190,13 @@ public:
      * @param val Value to set
      */
     void digitalWrite(uint8_t pin, uint8_t val) {
-    	::digitalWrite(pin, val);
+        ::digitalWrite(pin, val);
         char mem[8];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("dw");
         cmd.add(pin);
         cmd.add(val);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -185,13 +208,13 @@ public:
      * @param val Value to set
      */
     void analogWrite(uint8_t pin, int val) {
-    	::analogWrite(pin, val);
+        ::analogWrite(pin, val);
         char mem[12];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add("aw");
         cmd.add(pin);
         cmd.add(val);
-        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength());
+        static_cast<Proto*>(this)->sendCmd(BLYNK_CMD_HARDWARE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     /**
@@ -206,7 +229,9 @@ public:
         uint16_t start = (uint16_t)micros();
         while (ms > 0) {
             static_cast<Proto*>(this)->run();
+#if defined(ARDUINO) && (ARDUINO >= 151)
             yield();
+#endif
             if (((uint16_t)micros() - start) >= 1000) {
                 ms--;
                 start += 1000;

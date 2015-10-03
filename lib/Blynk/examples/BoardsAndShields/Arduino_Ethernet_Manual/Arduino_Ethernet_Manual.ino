@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -39,9 +39,9 @@ IPAddress subnet_mask(255, 255, 255,   0);
 void setup()
 {
   Serial.begin(9600);
-  Blynk.begin(auth, server_ip, 8443, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
+  Blynk.begin(auth, server_ip, 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
   // Or like this:
-  //Blynk.begin(auth, "server.org", 8443, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
+  //Blynk.begin(auth, "cloud.blynk.cc", 8442, arduino_ip, dns_ip, gateway_ip, subnet_mask, arduino_mac);
 }
 
 void loop()

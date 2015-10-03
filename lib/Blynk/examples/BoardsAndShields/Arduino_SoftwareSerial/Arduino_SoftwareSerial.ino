@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -24,11 +24,11 @@
 #include <BlynkApiArduino.h>
 #include <Adapters/BlynkSerial.h>
 
-typedef BlynkTransportSerial<SoftwareSerial> SwSerialTransp;
+typedef BlynkTransportSerial<SoftwareSerial> SwSerialConnection;
 
-SoftwareSerial mySerial(10,11);
-SwSerialTransp myTransp(mySerial);
-BlynkSerial<SwSerialTransp> Blynk(myTransp);
+SoftwareSerial SwSerial(2, 3); // RX, TX
+SwSerialConnection connection(SwSerial);
+BlynkSerial<SwSerialConnection> Blynk(connection);
 
 // You should get Auth Token in the Blynk App.
 // Go to the Project Settings (nut icon).

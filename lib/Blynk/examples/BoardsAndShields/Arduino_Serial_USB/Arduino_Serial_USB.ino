@@ -6,7 +6,7 @@
  *
  *   Downloads, docs, tutorials: http://www.blynk.cc
  *   Blynk community:            http://community.blynk.cc
- *   Social groups:              http://www.fb.com/blynkapp
+ *   Social networks:            http://www.fb.com/blynkapp
  *                               http://twitter.com/blynk_app
  *
  * Blynk library is licensed under MIT license
@@ -25,8 +25,15 @@
  * 3. Run the script (script located in "scripts" folder of library root,
  *    e.g. 'blynk-library/scripts') for redirecting traffic to server:
  *
- *      for Windows:         scripts/blynk-ser.bat
- *      for Linux and OSX:   ./scripts/blynk-ser.sh (may need to run with sudo)
+ *      for Windows:
+ *                     1. Open cmd.exe
+ *                     2. write : (your way to blynk-ser.bat folder) example: "cd C:\blynk-library-0.3.1\blynk-library-0.3.1\scripts"
+ *                     3. write : "blynk-ser.bat -c COM4" (where COM4 is port with your Arduino)
+ *                     4. And press "Enter" , press "Enter" and press "Enter"
+ *
+ *      for Linux and OSX:
+ *
+ *                    ./blynk-ser.sh (may need to run with sudo)
  *
  *    You can specify port, baud rate, and server endpoint like this:
  *      ./blynk-ser.sh -c <serial port> -b <baud rate> -s <server address> -p <server port>
@@ -48,7 +55,7 @@
 
 // You could use a spare Hardware Serial on boards that have it (like Mega)
 #include <SoftwareSerial.h>
-SoftwareSerial SwSerial(10, 11);
+SoftwareSerial SwSerial(2, 3); // RX, TX
 #define BLYNK_PRINT SwSerial
 #include <BlynkSimpleSerial.h>
 

@@ -27,27 +27,29 @@ public:
         cmd.add(mPin);
         cmd.add("i");
         cmd.add(token);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength());
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    void digitalWrite(int pin, int val) {
+    template <typename T>
+    void digitalWrite(const T& pin, int val) {
         char mem[64];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
         cmd.add("dw");
         cmd.add(pin);
         cmd.add(val);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength());
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
-    void analogWrite(int pin, int val) {
+    template <typename T>
+    void analogWrite(const T& pin, int val) {
         char mem[64];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
         cmd.add("aw");
         cmd.add(pin);
         cmd.add(val);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength());
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     template <typename T>
@@ -58,11 +60,11 @@ public:
         cmd.add("vw");
         cmd.add(pin);
         cmd.add(data);
-        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength());
+        Blynk.sendCmd(BLYNK_CMD_BRIDGE, 0, cmd.getBuffer(), cmd.getLength()-1);
     }
 
     void virtualWrite(int pin, const void* buff, size_t len) {
-        char mem[16];
+        char mem[8];
         BlynkParam cmd(mem, 0, sizeof(mem));
         cmd.add(mPin);
         cmd.add("vw");
@@ -71,7 +73,7 @@ public:
     }
 
     void virtualWrite(int pin, const BlynkParam& param) {
-        virtualWrite(pin, param.getBuffer(), param.getLength());
+        virtualWrite(pin, param.getBuffer(), param.getLength()-1);
     }
 
 private:
