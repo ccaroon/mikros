@@ -1,16 +1,17 @@
 #include <Arduino.h>
-#include <LiquidCrystal.h>
+// #include <LiquidCrystal.h>
 #include <Wire.h>
 
 #include "RTClib.h" // platformio lib install 83 (Adafruit)
 
 RTC_DS1307 rtc;
-LiquidCrystal lcd = LiquidCrystal(7, 8, 9, 10, 11, 12);
+// LiquidCrystal lcd = LiquidCrystal(7, 8, 9, 10, 11, 12);
 
 void init_rtc_test() {
     Wire.begin();
     rtc.begin();
-    lcd.begin(16,2);
+    Serial.begin(9600);
+    // lcd.begin(16,2);
 
     if (! rtc.isrunning()) {
         // following line sets the RTC to the date & time this sketch was compiled
@@ -23,17 +24,16 @@ void init_rtc_test() {
 }
 
 void run_rtc_test() {
-    char date_str[11];
-    char time_str[8];
+    char date_str[21];
 
     DateTime now = rtc.now();
     
-    sprintf(date_str, "%02d/%02d/%04d", now.month(), now.day(), now.year());
-    sprintf(time_str, "%02d:%02d:%02d", now.hour(), now.minute(), now.second());
+    sprintf(date_str, "%02d/%02d/%04d @ %02d:%02d:%02d", now.month(), now.day(), now.year(), now.hour(), now.minute(), now.second());
 
-    lcd.setCursor(0,0);
-    lcd.print(date_str);
-    lcd.setCursor(0,1);
-    lcd.print(time_str);
-    delay(500);
+    Serial.println(date_str);
+    // lcd.setCursor(0,0);
+    // lcd.print(date_str);
+    // lcd.setCursor(0,1);
+    // lcd.print(time_str);
+    delay(1000);
 }
