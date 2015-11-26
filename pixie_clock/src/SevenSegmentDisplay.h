@@ -1,5 +1,5 @@
 // CDEBAFG.
-const byte digits[10] = {
+const byte DIGITS[10] = {
     B00000011,
     B01101111,
     B10000101,
