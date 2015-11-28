@@ -22,9 +22,7 @@ void setup() {
     }
     // rtc.adjust(DateTime(F(__DATE__), F(__TIME__)));
 
-    pinMode(latchPin, OUTPUT);
-    pinMode(dataPin, OUTPUT);  
-    pinMode(clockPin, OUTPUT);
+    ShiftRegister::init();    
 }
 // -----------------------------------------------------------------------------
 void loop() {
@@ -34,14 +32,14 @@ void loop() {
     DateTime now = rtc.now();
 
     getDigits(now.hour(), digits);
-    data[0] = DIGITS[digits[0]];
-    data[1] = DIGITS[digits[1]];
+    data[0] = SevenSegmentDisplay::DIGITS[digits[0]];
+    data[1] = SevenSegmentDisplay::DIGITS[digits[1]];
 
     digits[0] = 0; digits[1] = 0;
     getDigits(now.minute(), digits);
-    data[2] = DIGITS[digits[0]];
-    data[3] = DIGITS[digits[1]];
-    sendData(data, 4);
+    data[2] = SevenSegmentDisplay::DIGITS[digits[0]];
+    data[3] = SevenSegmentDisplay::DIGITS[digits[1]];
+    ShiftRegister::sendData(data, 4);
 
     // char date_str[21];    
     // sprintf(date_str, "%02d/%02d/%04d @ %02d:%02d:%02d", now.month(), now.day(), now.year(), now.hour(), now.minute(), now.second());

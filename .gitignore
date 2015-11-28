@@ -5,3 +5,4 @@ lib/Adafruit_CC3000_ID17/
 lib/Timer_ID75/
 lib/DallasTemperature_ID54/
 lib/OneWire_ID1/
+lib/RTC_ID83/
