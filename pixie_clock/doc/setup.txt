@@ -7,13 +7,13 @@ Setup
 #### TOP ####
 * G   (1) ---> Q1 (1)
 * F   (2) ---> Q2 (2)
-* GND (3) ---> N/A (connected to GND)
+* PWR (3) ---> N/A (connected to PWR)
 * A   (4) ---> Q3 (3)
 * B   (5) ---> Q4 (4)
 #### BOTTOM ####
 * E   (6) ---> Q5 (5)
 * D   (7) ---> Q6 (6)
-* GND (8) ---> N/A (connected to GND)
+* PWR (8) ---> N/A (connected to PWR)
 * C   (9) ---> Q7 (7)
 * DP (10) ---> Q0 (15)
 
