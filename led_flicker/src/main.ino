@@ -1,4 +1,5 @@
-#define FLICKER_LED_PIN 10
+// Should be a PWM Digital capable PIN
+#define FLICKER_LED_PIN 11
 
 // the start of the flicker (low)
 static int flicker_low_min = 200;
