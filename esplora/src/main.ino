@@ -34,10 +34,10 @@ void displayTemperature() {
         Esplora.writeRGB(0,0,128);
     }
 
-    EsploraTFT.stroke(255, 255, 255);
+    EsploraTFT.stroke(255,255,255);
     EsploraTFT.text(tempPrintout, tempX, tempY);
 
-    delay(2000);
+    delay(5000);
 
     EsploraTFT.stroke(0, 0, 0);
     EsploraTFT.text(tempPrintout, tempX, tempY);

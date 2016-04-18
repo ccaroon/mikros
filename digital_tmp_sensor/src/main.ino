@@ -1,5 +1,7 @@
-// platformio lib install 54
+// platformio lib install 1
 #include <OneWire.h>
+
+// platformio lib install 54
 #include <DallasTemperature.h>
 
 OneWire oneWire(2);
@@ -11,18 +13,18 @@ void setup() {
 }
 
 void loop() {
-    uint8_t count = sensor.getDeviceCount();
-    Serial.print("Count: ");
-    Serial.println(count);
-
+    // uint8_t count = sensor.getDeviceCount();
+    // Serial.print("Count: ");
+    // Serial.println(count);
+    //
     uint8_t addr;
     sensor.getAddress(&addr, 0);
-    Serial.println(addr);
+    // Serial.println(addr);
 
     sensor.requestTemperaturesByAddress(&addr);
 
     float temp = sensor.getTempF(&addr);
     Serial.println(temp);
 
-    delay(1000);
+    delay(5000);
 }
