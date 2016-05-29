@@ -35,12 +35,6 @@ void reset() {
     arduboy.display();
 }
 
-void msg(char* m) {
-    arduboy.setCursor(5,5);
-    arduboy.print(m);
-    arduboy.display();
-}
-
 void setup() {
     arduboy.begin();
     arduboy.setFrameRate(15);
