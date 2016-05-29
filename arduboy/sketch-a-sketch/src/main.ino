@@ -14,17 +14,30 @@ uint8_t currentX = 64;
 uint8_t currentY = 32;
 uint8_t previousX = 64;
 uint8_t previousY = 32;
+uint8_t currentColor = WHITE;
 
 void reset() {
     currentX = 64;
     currentY = 32;
     previousX = 64;
     previousY = 32;
-    drawingOn = true;
 
     arduboy.clear();
     arduboy.drawRect(0, 0, 128, 64, WHITE);
     arduboy.drawPixel(currentX, currentY, WHITE);
+
+    drawingOn = true;
+    arduboy.drawChar(1,1,'+',BLACK,WHITE,1);
+
+    currentColor = WHITE;
+    arduboy.drawChar(121,1,'W',BLACK,WHITE,1);
+
+    arduboy.display();
+}
+
+void msg(char* m) {
+    arduboy.setCursor(5,5);
+    arduboy.print(m);
     arduboy.display();
 }
 
@@ -48,10 +61,28 @@ void loop() {
         reset();
     }
     else if (arduboy.pressed(A_BUTTON)) {
-        drawingOn = false;
+        if (drawingOn == true) {
+            drawingOn = false;
+            arduboy.drawChar(1,1,'-',BLACK,WHITE,1);
+        }
+        else {
+            drawingOn = true;
+            arduboy.drawChar(1,1,'+',BLACK,WHITE,1);
+        }
+        arduboy.display();
+        delay(500);
     }
     else if (arduboy.pressed(B_BUTTON)) {
-        drawingOn = true;
+        if (currentColor == WHITE) {
+            currentColor = BLACK;
+            arduboy.drawChar(121,1,'B',BLACK,WHITE,1);
+        }
+        else {
+            currentColor = WHITE;
+            arduboy.drawChar(121,1,'W',BLACK,WHITE,1);
+        }
+        arduboy.display();
+        delay(500);
     }
     else {
         previousX = currentX;
@@ -76,20 +107,22 @@ void loop() {
             cursorMoved = true;
         }
 
-        if (cursorMoved && drawingOn) {
-            arduboy.drawPixel(currentX, currentY, WHITE);
-            arduboy.display();
-        }
-        else if (cursorMoved && !drawingOn) {
-            uint8_t color = arduboy.getPixel(previousX, previousY);
-            arduboy.drawPixel(previousX, previousY, !color);
+        if (cursorMoved) {
+            if (drawingOn) {
+                arduboy.drawPixel(previousX, previousY, currentColor);
+                arduboy.drawPixel(currentX, currentY, WHITE);
+            }
+            else {
+                uint8_t color = arduboy.getPixel(previousX, previousY);
+                arduboy.drawPixel(previousX, previousY, !color);
 
-            color = arduboy.getPixel(currentX, currentY);
-            arduboy.drawPixel(currentX, currentY, !color);
+                color = arduboy.getPixel(currentX, currentY);
+                arduboy.drawPixel(currentX, currentY, !color);
+            }
 
             arduboy.display();
         }
     }
 
-    delay(50);
+    delay(10);
 }
