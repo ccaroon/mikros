@@ -33,6 +33,10 @@ void reset() {
     arduboy.drawChar(121,1,'W',BLACK,WHITE,1);
 
     arduboy.display();
+
+    arduboy.setRGBled(255,0,255);
+    delay(250);
+    arduboy.setRGBled(0,0,0);
 }
 
 void setup() {
