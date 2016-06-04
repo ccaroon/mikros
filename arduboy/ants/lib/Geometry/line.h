@@ -2,14 +2,14 @@
 #define __LINE_H__
 
 #include "point.h"
-#include "rectangle.h"
+// #include "rectangle.h"
 
 class Line {
 public:
-    Line(Point&, Point&);
+    Line();
+    Line(const Point&, const Point&);
 
-    Point intersectLine(Line&);
-    bool intersectRect(Rectangle&);
+    Point intersectionPoint(const Line&);
 
     Point p1;
     Point p2;
