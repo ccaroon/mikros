@@ -1,6 +1,3 @@
-// #include "Arduboy.h"
-// Arduboy arduboy;
-
 #include "nomis.h";
 
 Nomis nomis;
@@ -10,21 +7,36 @@ void setup() {
     nomis.newGame();
 }
 
+bool playerTurn = false;
 void loop() {
-    if (!arduboy.nextFrame()) {
+    if (!nomis.ready()) {
         return;
     }
 
-    nomis.displayLevel(level);
-    delay(750);
+    if (playerTurn) {
+        nomis.displayProgress();
+        Button button = nomis.checkForButtonPress();
 
-    nomis.playSequence();
-    nomis.nextLevel();
-
-    if (level >= 25) {
-        nomis.displaySuccess();
+        if (button != Button::NONE) {
+            nomis.drawButton(button);
+            if (nomis.correctButtonPressed(button)) {
+                if (nomis.sequenceComplete()) {
+                    nomis.displaySuccess();
+                    nomis.nextLevel();
+                    playerTurn = false;
+                    delay(1000);
+                }
+            } else {
+                nomis.displayFail();
+                nomis.resetLevel();
+                delay(1000);
+                playerTurn = false;
+            }
+        }
+    } else {
+        nomis.displayLevel();
         delay(750);
-        nomis.newGame();
+        nomis.playSequence();
+        playerTurn = true;
     }
-    delay(2500);
 }

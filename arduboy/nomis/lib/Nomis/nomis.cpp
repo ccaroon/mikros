@@ -9,61 +9,104 @@ void Nomis::begin() {
 
 void Nomis::newGame() {
     level = 1;
+    buttonIndex = 0;
     for (uint8_t i = 0; i < seqSize; i++) {
-        sequence[i] = random(6)+1;
+        sequence[i] = static_cast<Button>(random(6)+1);
     }
 
-    displayLogo();    
+    displayLogo();
 }
 
 void Nomis::nextLevel() {
     level++;
+    buttonIndex = 0;
 }
 
 void Nomis::playSequence() {
     for (uint8_t i = 0; i < level; i++) {
-        arduboy.clear();
-        switch(sequence[i]) {
-            case 1:
-                nomis.drawUp();
-                break;
-            case 2:
-                nomis.drawRight();
-                break;
-            case 3:
-                nomis.drawDown();
-                break;
-            case 4:
-                nomis.drawLeft();
-                break;
-            case 5:
-                nomis.drawAButton();
-                break;
-            case 6:
-                nomis.drawBButton();
-                break;
-        };
-        arduboy.display();
-        delay(500);
+        drawButton(sequence[i]);
     }
 }
 
+void Nomis::drawButton(Button b) {
+    arduboy.clear();
+    switch(b) {
+        case Button::A:
+            drawAButton();
+            break;
+        case Button::B:
+            drawBButton();
+            break;
+        case Button::UP:
+            drawUp();
+            break;
+        case Button::RIGHT:
+            drawRight();
+            break;
+        case Button::DOWN:
+            drawDown();
+            break;
+        case Button::LEFT:
+            drawLeft();
+            break;
+        case Button::NONE:
+            break;
+    }
+    arduboy.display();
+    delay(500);
+}
 
-void Nomis::readSequence() {
+void Nomis::resetLevel() {
+    buttonIndex = 0;
+}
+
+bool Nomis::sequenceComplete() {
+    return buttonIndex == level ? true : false;
+}
+
+bool Nomis::correctButtonPressed(Button b) {
+    bool correct = sequence[buttonIndex] == b ? true : false;
+    if (correct) {
+        buttonIndex++;
+    }
+
+    return correct;
+}
+
+Button Nomis::checkForButtonPress() {
+    if (arduboy.pressed(UP_BUTTON)) {
+        return Button::UP;
+    } else if (arduboy.pressed(DOWN_BUTTON)) {
+        return Button::DOWN;
+    } else if (arduboy.pressed(LEFT_BUTTON)) {
+        return Button::LEFT;
+    } else if (arduboy.pressed(RIGHT_BUTTON)) {
+        return Button::RIGHT;
+    } else if (arduboy.pressed(A_BUTTON)) {
+        return Button::A;
+    } else if (arduboy.pressed(B_BUTTON)) {
+        return Button::B;
+    } else {
+        return Button::NONE;
+    }
 }
 
 void Nomis::displayLogo() {
     uint8_t red = 255;
     uint8_t blue = 0;
+    int     baseFreq = 512;
     arduboy.setTextSize(3);
 
 
     for(uint8_t i = 0; i < 6; i++) {
         arduboy.clear();
-        arduboy.setCursor(30+(i*16),20);
+        arduboy.setCursor(30+(i*15),20);
         arduboy.print(gameName[i]);
         arduboy.setRGBled(red, 0, blue);
         arduboy.display();
+
+        arduboy.tunes.tone(baseFreq, toneDuration);
+        baseFreq += 512;
 
         if (red > 0) {
             red = 0;
@@ -89,9 +132,9 @@ void Nomis::displayLogo() {
     delay(2000);
 }
 
-void Nomis::displayLevel(uint8_t number) {
+void Nomis::displayLevel() {
     char numStr[4];
-    sprintf(numStr, "%03d", number);
+    sprintf(numStr, "%03d", level);
 
     arduboy.clear();
     arduboy.setTextSize(3);
@@ -107,10 +150,10 @@ void Nomis::displayLevel(uint8_t number) {
 
 void Nomis::displayFail() {
     arduboy.clear();
-    arduboy.setTextSize(3);
+    arduboy.setTextSize(2);
 
-    arduboy.setCursor(10,20);
-    arduboy.print("Failed!");
+    arduboy.setCursor(8,20);
+    arduboy.print("Try Again!");
 
     // I gots me on of them messed-up Arduboy with the RGB LED all backwards
     // and stuff so Red == Blue and Blue == Red and Green don't work
@@ -131,75 +174,56 @@ void Nomis::displaySuccess() {
     arduboy.display();
 }
 
-// Private Methods
+void Nomis::displayProgress() {
+    char text[32];
 
+    sprintf(text, "L%03d - %d/%d", level, buttonIndex, level);
+    arduboy.clear();
+    arduboy.setTextSize(2);
+    arduboy.setCursor(5,5);
+    arduboy.print(text);
+    arduboy.display();
+}
+
+bool Nomis::ready() {
+    return arduboy.nextFrame();
+}
+
+// Private Methods
 void Nomis::drawUp() {
     uint8_t x = 30;
     uint8_t y = 5;
     arduboy.fillTriangle(x, y, x-(triWidth/2), y+triHeight, x+(triWidth/2), y+triHeight, 1);
-    arduboy.tunes.tone(512, toneDuration);
+    arduboy.tunes.tone(upFreq, toneDuration);
 }
 
 void Nomis::drawRight() {
     uint8_t x = 45 + triHeight;
     uint8_t y = 23 + (triWidth/2);
     arduboy.fillTriangle(x, y, x-triHeight, y+(triWidth/2), x-triHeight, y-(triWidth/2), 1);
-    arduboy.tunes.tone(1024, toneDuration);
+    arduboy.tunes.tone(rightFreq, toneDuration);
 }
 
 void Nomis::drawDown() {
     uint8_t x = 30;
     uint8_t y = 60;
     arduboy.fillTriangle(x, y, x-(triWidth/2), y-triHeight, x+(triWidth/2), y-triHeight, 1);
-    arduboy.tunes.tone(1536, toneDuration);
+    arduboy.tunes.tone(downFreq, toneDuration);
 }
 
 void Nomis::drawLeft() {
     uint8_t x = 15 - triHeight;
     uint8_t y = 23 + (triWidth/2);
     arduboy.fillTriangle(x, y, x+triHeight, y+(triWidth/2), x+triHeight, y-(triWidth/2), 1);
-    arduboy.tunes.tone(2048, toneDuration);
+    arduboy.tunes.tone(leftFreq, toneDuration);
 }
 
 void Nomis::drawAButton() {
     arduboy.fillCircle(90, 40, 10, 1);
-    arduboy.tunes.tone(2560, toneDuration);
+    arduboy.tunes.tone(aFreq, toneDuration);
 }
 
 void Nomis::drawBButton() {
     arduboy.fillCircle(116, 32, 10, 1);
-    arduboy.tunes.tone(3072, toneDuration);
+    arduboy.tunes.tone(bFreq, toneDuration);
 }
-
-    // // Red Buttons
-    // if (arduboy.pressed(A_BUTTON)) {
-    //     arduboy.clear();
-    //     drawAButton();
-    //     arduboy.display();
-    // } else if (arduboy.pressed(B_BUTTON)) {
-    //     arduboy.clear();
-    //     drawBButton();
-    //     arduboy.display();
-    // }
-    // // Left/Right - Horizonal
-    // else if (arduboy.pressed(RIGHT_BUTTON)) {
-    //     arduboy.clear();
-    //     drawRight();
-    //     arduboy.display();
-    // }
-    // else if (arduboy.pressed(LEFT_BUTTON)) {
-    //     arduboy.clear();
-    //     drawLeft();
-    //     arduboy.display();
-    // }
-    // // Up/Down - Vertical
-    // else if (arduboy.pressed(UP_BUTTON)) {
-    //     arduboy.clear();
-    //     drawUp();
-    //     arduboy.display();
-    // }
-    // else if (arduboy.pressed(DOWN_BUTTON)) {
-    //     arduboy.clear();
-    //     drawDown();
-    //     arduboy.display();
-    // }
