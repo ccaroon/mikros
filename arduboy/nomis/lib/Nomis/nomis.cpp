@@ -7,14 +7,28 @@ void Nomis::begin() {
     arduboy.initRandomSeed();
 }
 
+bool Nomis::menu() {
+    Button b = Button::NONE;
+    displayLogo();
+
+    arduboy.setCursor(15, 35);
+    arduboy.setTextSize(1);
+    arduboy.print("Press A to Start");
+    arduboy.display();
+
+    while (b != Button::A) {
+        b = checkForButtonPress();
+    }
+
+    return true;
+}
+
 void Nomis::newGame() {
     level = 1;
     buttonIndex = 0;
     for (uint8_t i = 0; i < seqSize; i++) {
         sequence[i] = static_cast<Button>(random(6)+1);
     }
-
-    displayLogo();
 }
 
 void Nomis::nextLevel() {
@@ -97,10 +111,9 @@ void Nomis::displayLogo() {
     int     baseFreq = 512;
     arduboy.setTextSize(3);
 
-
     for(uint8_t i = 0; i < 6; i++) {
         arduboy.clear();
-        arduboy.setCursor(30+(i*15),20);
+        arduboy.setCursor(30+(i*15),5);
         arduboy.print(gameName[i]);
         arduboy.setRGBled(red, 0, blue);
         arduboy.display();
@@ -123,13 +136,13 @@ void Nomis::displayLogo() {
     }
 
     arduboy.clear();
-    arduboy.setCursor(20,20);
+    arduboy.setCursor(20,5);
     arduboy.print(gameName);
     arduboy.display();
 
     arduboy.setRGBled(255, 0, 255);
 
-    delay(2000);
+    delay(1000);
 }
 
 void Nomis::displayLevel() {
@@ -175,12 +188,12 @@ void Nomis::displaySuccess() {
 }
 
 void Nomis::displayProgress() {
-    char text[32];
+    char text[10];
 
-    sprintf(text, "L%03d - %d/%d", level, buttonIndex, level);
+    sprintf(text, "%d/%d", buttonIndex, level);
     arduboy.clear();
     arduboy.setTextSize(2);
-    arduboy.setCursor(5,5);
+    arduboy.setCursor(45,5);
     arduboy.print(text);
     arduboy.display();
 }

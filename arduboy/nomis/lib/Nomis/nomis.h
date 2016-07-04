@@ -50,6 +50,7 @@ public:
     bool correctButtonPressed(Button);
     bool sequenceComplete();
     void resetLevel();
+    bool menu();
 
 private:
     uint8_t level = 1;
