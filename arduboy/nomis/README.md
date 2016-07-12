@@ -1,6 +1,31 @@
 nomis
 =====
+
+## Description
 A simple memory game similar to Simon(tm).
+
+## Instructions
+The game starts at level one by showing one of the 6 buttons on the screen 
+and playing an associated tone. Your job is to repeat the button press.
+
+At each level a new button is added to the sequence. So by level 5 the Arduboy
+will display a sequence of five buttons and play their associated tones and 
+you'll have to repeat the sequence of 5.
+
+There's currently no penalty for getting it wrong. You get as many tries as you
+like.
+
+You advance levels by successfully repeating the sequence that the Arduboy plays.
+
+How far can you get??
+
+## Download
+[From GitHub](https://github.com/ccaroon/arduino/tree/master/arduboy/nomis)
+
+## Development
+Nomis was developed with [Platformio](http://platformio.org)
+
+-----
 
 ## Work In Progress
 
