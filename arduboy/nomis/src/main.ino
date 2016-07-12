@@ -1,4 +1,4 @@
-#include "nomis.h";
+#include "nomis.h"
 
 Nomis nomis;
 
