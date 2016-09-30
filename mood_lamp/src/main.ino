@@ -2,12 +2,9 @@
 
 Effects effects;
 
-void setup() {
-    Serial.begin(9600);
-    effects.off();
-}
+void setup() { Serial.begin(9600); }
 
 void loop() {
-    effects.candle();
-    delay(250);
+  effects.lamp(75, 255, 128);
+  delay(250);
 }

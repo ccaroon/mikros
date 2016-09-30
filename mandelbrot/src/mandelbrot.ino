@@ -1,8 +1,7 @@
 #include <Wire.h>
-#include <SPI.h>
 #include <TinyScreen.h>
 
-TinyScreen display = TinyScreen(0);
+TinyScreen display = TinyScreen(TinyScreenPlus);
 
 int xMin = -2, xMax = 1, yMin = -1, yMax = 1;
 int width = 96, height = 64;
@@ -42,7 +41,7 @@ void compute_mandelbrot(int iterations)
                     colour = (2760 + k) % 4096;
                     k = iterations;
                 }
-                
+
             }
 
             if (inSet)
@@ -66,7 +65,6 @@ void compute_mandelbrot(int iterations)
 
 void setup()
 {
-    Wire.begin();
     display.begin();
 }
 

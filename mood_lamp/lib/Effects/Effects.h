@@ -5,23 +5,23 @@
 #include <Adafruit_NeoPixel.h>
 
 #define NEOPIXEL_COUNT 15
-#define NEOPIXEL_PIN 7
+#define NEOPIXEL_PIN 4
 
 class Effects {
-  public:
-    Effects();
-    ~Effects();
+public:
+  Effects();
+  ~Effects();
 
-    void candle();
-    void lamp(uint8_t r, uint8_t g, uint8_t b);
-    // void breath();
-    // void slowCycle();
-    // void fastCycle();
-    void off();
+  void candle();
+  void lamp(uint8_t r, uint8_t g, uint8_t b);
+  // void breath();
+  // void slowCycle();
+  // void fastCycle();
+  void off();
 
-  private:
-    Adafruit_NeoPixel strip;
-    NeoCandle *neoCandle;
+private:
+  Adafruit_NeoPixel strip;
+  NeoCandle *neoCandle;
 };
 
 #endif

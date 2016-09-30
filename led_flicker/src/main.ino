@@ -17,15 +17,13 @@ static int flicker_hold_max = 80; // milliseconds
 // delay after each low-high-low cycle
 // low->high->low |flicker_pause| low->high...
 static int flicker_pause_min = 100; // milliseconds
-static int flicker_pause_max = 200;  // milliseconds
+static int flicker_pause_max = 200; // milliseconds
 
 // delay low to high and high to low cycle
-static int flicker_speed_min = 900; // microseconds
+static int flicker_speed_min = 900;  // microseconds
 static int flicker_speed_max = 1000; // microseconds
 
-void setup() {
-  pinMode(FLICKER_LED_PIN, OUTPUT);
-}
+void setup() { pinMode(FLICKER_LED_PIN, OUTPUT); }
 
 int flicker_random_low_start = 0;
 int flicker_random_low_end = 0;
@@ -47,7 +45,7 @@ void loop() {
   flicker_random_speed_end = random(flicker_speed_min, flicker_speed_max);
 
   // low -> high
-  for (int i = flicker_random_low_start; i<flicker_random_high; i++) {
+  for (int i = flicker_random_low_start; i < flicker_random_high; i++) {
     analogWrite(FLICKER_LED_PIN, i);
     delayMicroseconds(flicker_random_speed_start);
   }
@@ -56,7 +54,7 @@ void loop() {
   delay(random(flicker_hold_min, flicker_hold_max));
 
   // high -> low
-  for (int i = flicker_random_high; i>=flicker_random_low_end; i--) {
+  for (int i = flicker_random_high; i >= flicker_random_low_end; i--) {
     analogWrite(FLICKER_LED_PIN, i);
     delayMicroseconds(flicker_random_speed_end);
   }
