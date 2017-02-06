@@ -1,7 +1,6 @@
 oak_test.bin: project.properties src/*
 	mkdir -p build/
-	# cp -a project.properties src/* lib/Blynk/* lib/ESP8266WiFi/* build/
-	cp -a project.properties src/* build/
+	cp -a project.properties src/* lib/Blynk/* lib/ESP8266WiFi/* build/
 	particle compile oak build/ --saveTo oak_test.bin
 	rm -rf build/
 
