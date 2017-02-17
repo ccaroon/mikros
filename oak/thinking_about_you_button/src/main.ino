@@ -55,7 +55,6 @@ void setup() {
 }
 
 void loop() {
-    // if (WHOAMI == "alpha") {
     if (digitalRead(BUTTON_PIN) == HIGH) {
         Particle.publish(WHOAMI);
         digitalWrite(LED_PIN, HIGH);
@@ -63,5 +62,4 @@ void loop() {
     } else {
         digitalWrite(LED_PIN, LOW);
     }
-    // }
 }
