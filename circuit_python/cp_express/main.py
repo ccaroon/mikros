@@ -19,8 +19,10 @@ class Thing:
     def __init__(self):
         # pass
         self._loop_count = 0
+
         self._action_index = 0
-        # self._actions = [self.twinkle,self.blink]
+        self._curr_action = None
+        self._actions = None
 
     ############################################################################
     # Helper Functions
@@ -51,7 +53,7 @@ class Thing:
         self.set_color(color)
         time.sleep(1.0)
 
-    def twinkle(self, count = 1, color = (128,128,0), wait = 0.25):
+    def twinkle(self, count = 7, color = (64,64,176), wait = 0.25):
         '''Turn random pixels on & off in the given color giving the impression
         of them twinkling'''
 
@@ -106,7 +108,7 @@ class Thing:
 
         self.clear_all()
 
-    def alt_colors(self, color1, color2):
+    def alt_colors(self, color1 = RED, color2 = GREEN):
         '''Alternate two colors on the even/odd pixels'''
         evn_color = color1
         odd_color = color2
@@ -142,35 +144,36 @@ class Thing:
         time.sleep(0.5)
 
     ############################################################################
+    def init_actions(self):
+        self._actions = [
+            self.twinkle,
+            self.alt_colors,
+            self.primary_colors
+        ]
+        self._curr_action = self._actions[self._action_index]
+
     def run(self):
-        # self.primary_colors()
+        if cpx.button_a:
+            self._action_index += 1
+            if self._action_index > len(self._actions)-1:
+                self._action_index = 0
+            self._curr_action = self._actions[self._action_index]
 
-        # if cpx.button_a:
-            # color = (0,128,128)
-            # pass
-            # ACTION_INDEX = 0
-            # ACTION_INDEX += 1
-            # if ACTION_INDEX > len(ACTIONS):
-            #     ACTION_INDEX = 0
-            # current_action = ACTIONS[ACTION_INDEX]
+        self._curr_action()
 
-        # if cpx.button_b:
-            # pass
-            # ACTION_INDEX = 1
+        # if cpx.switch:
+        #     self.twinkle(3,thing.YELLOW,0.25)
+        # else:
+        #     # self.primary_colors()
+        #     self.alt_colors(thing.RED,thing.GREEN)
 
-        if cpx.switch:
-            self.twinkle(3,thing.YELLOW,0.25)
-        else:
-            # self.primary_colors()
-            self.alt_colors(thing.INDIGO,thing.VIOLET)
-
-        # ACTIONS[ACTION_INDEX]()
         self._loop_count += 1
 
 ################################################################################
 # Main
 ################################################################################
 thing = Thing()
+thing.init_actions()
 while True:
     thing.run()
 #
