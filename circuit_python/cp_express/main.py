@@ -53,7 +53,7 @@ class Thing:
         self.set_color(color)
         time.sleep(1.0)
 
-    def twinkle(self, count = 7, color = (64,64,176), wait = 0.25):
+    def twinkle(self, count = 3, color = (64,64,176), wait = 0.25):
         '''Turn random pixels on & off in the given color giving the impression
         of them twinkling'''
 
@@ -143,9 +143,50 @@ class Thing:
 
         time.sleep(0.5)
 
+    def _equal_colors(self, c1, c2):
+        are_equal = True
+        for i in range(3):
+            if c1[i] != c2[i]:
+                are_equal = False
+                break
+        return(are_equal)
+
+    def _adjust_RGB(self, idx, color1, color2, inc):
+        new_color = list(color1)
+        if color1[idx] > color2[idx]:
+            diff = color1[idx] - color2[idx]
+            if (diff < inc):
+                new_color[idx] = color2[idx]
+            else:
+                new_color[idx] -= inc
+        elif color1[idx] < color2[idx]:
+            diff = color2[idx] - color1[idx]
+            if (diff < inc):
+                new_color[idx] = color2[idx]
+            else:
+                new_color[idx] += inc
+        elif color1[idx] == color2[idx]:
+            pass
+
+        return(new_color)
+
+    def transition_color(self, start = (255,255,255), end = (0,0,0), inc=5):
+        curr_color = start
+        self.set_color(tuple(curr_color))
+        while not self._equal_colors(curr_color,end):
+            curr_color = self._adjust_RGB(0,curr_color,end,inc) # R
+            curr_color = self._adjust_RGB(1,curr_color,end,inc) # G
+            curr_color = self._adjust_RGB(2,curr_color,end,inc) # B
+
+            time.sleep(.5)
+            self.set_color(tuple(curr_color))
+
+        time.sleep(10)
+
     ############################################################################
     def init_actions(self):
         self._actions = [
+            self.transition_color,
             self.twinkle,
             self.alt_colors,
             self.primary_colors
@@ -175,6 +216,8 @@ class Thing:
 thing = Thing()
 thing.init_actions()
 while True:
+    print ("---=== BEGIN RUN ===---")
     thing.run()
+    print ("---=================---")
 #
 # ################################################################################
