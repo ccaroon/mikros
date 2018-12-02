@@ -229,6 +229,7 @@ class Thing:
     ############################################################################
     def init_actions(self):
         self._actions = [
+            self.blink,
             self.twinkle2,
             # self.transition_color,
             # self.twinkle,

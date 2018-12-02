@@ -1,8 +1,8 @@
-install: main.py
-	cp main.py /media/ccaroon/CIRCUITPY
+install: code.py
+	cp code.py /media/ccaroon/CIRCUITPY
 
-win_install: main.py
-	cp main.py d:/
+win_install: code.py
+	cp code.py d:/
 
 term:
 	sudo screen /dev/ttyACM0 115200
