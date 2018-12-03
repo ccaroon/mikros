@@ -3,6 +3,7 @@
 MultiFunction mf;
 
 void setup() {
+    Serial.begin(9600);
     mf.begin();
 }
 

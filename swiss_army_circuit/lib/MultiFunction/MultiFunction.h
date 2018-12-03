@@ -20,9 +20,12 @@ const uint32_t TempColorMap[10] = {0x0000FF, 0x0000FF, 0x0000FF, 0x0033FF,
                                    0x0055FF, 0x00FFFF, 0x00FF11, 0x77FF00,
                                    0xFF7700, 0xFF0000};
 
-#define ACTION_COLORLOOP 0
-#define ACTION_TILT 1
+#define ACTION_DISPLAYILLUM 1
 #define ACTION_DISPLAYTEMP 2
+#define ACTION_COLORLOOP 3
+#define ACTION_TILT 4
+#define NUM_ACTIONS 2
+#define UPDATE_INTERVAL 1000
 
 class MultiFunction {
 
@@ -31,11 +34,13 @@ class MultiFunction {
     void loop();
 
   private:
-    uint8_t currentFunction = ACTION_DISPLAYTEMP;
+    unsigned long lastUpdated = 0;
+    uint8_t currentFunction = ACTION_DISPLAYILLUM;
 
     void colorLoop();
     void displayTemp();
     void tilt();
+    void displayIllumination();
 
     void setAllColor(uint32_t);
 };

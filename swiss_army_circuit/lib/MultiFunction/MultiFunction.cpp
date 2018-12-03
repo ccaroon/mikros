@@ -15,20 +15,24 @@ void MultiFunction::loop() {
 
         if (CircuitPlayground.rightButton()) {
             currentFunction += 1;
-            if (currentFunction > 2) {
-                currentFunction = 0;
+            if (currentFunction > NUM_ACTIONS) {
+                currentFunction = 1;
             }
         }
 
         switch (currentFunction) {
         case ACTION_COLORLOOP:
             colorLoop();
+            // CircuitPlayground.colorWheel(1);
             break;
         case ACTION_TILT:
             tilt();
             break;
         case ACTION_DISPLAYTEMP:
             displayTemp();
+            break;
+        case ACTION_DISPLAYILLUM:
+            displayIllumination();
             break;
         }
     }
@@ -54,17 +58,88 @@ void MultiFunction::colorLoop() {
 }
 
 void MultiFunction::displayTemp() {
-    float tempF = CircuitPlayground.temperatureF();
+    if (millis() - lastUpdated > UPDATE_INTERVAL) {
+        float tempF = CircuitPlayground.temperatureF();
 
-    Serial.println(tempF);
+        uint8_t num_pixels = map(tempF, 0, 100, 0, 10);
 
-    uint8_t p = map(tempF, 0, 100, 0, 10);
+        for (uint8_t i = 0; i < num_pixels; i++) {
+            if (i < 7) {
+                CircuitPlayground.setPixelColor(i, 0, (i * 42.5),
+                                                255 - (i * 42.5));
+            } else if (i >= 7) {
+                CircuitPlayground.setPixelColor(i, ((i - 6) * 85),
+                                                255 - ((i - 6) * 42.5), 0);
+            }
+        }
 
-    for (uint8_t i = 0; i < p; i++) {
-        CircuitPlayground.setPixelColor(i, TempColorMap[i]);
+        // Turn off the rest of the pixels
+        for (uint8_t i = num_pixels; i < 10; i++) {
+            CircuitPlayground.setPixelColor(i, 0x000000);
+        }
+
+        lastUpdated = millis();
     }
+}
 
-    delay(1000);
+// void MultiFunction::displayTemp() {
+//
+//     if (millis() - lastUpdated > UPDATE_INTERVAL) {
+//         float tempF = CircuitPlayground.temperatureF();
+//         Serial.println(tempF);
+//
+//         uint8_t p = map(tempF, 0, 100, 0, 10);
+//
+//         for (uint8_t i = 0; i < p; i++) {
+//             CircuitPlayground.setPixelColor(i, TempColorMap[i]);
+//         }
+//
+//         // Turn off the rest of the pixels
+//         for (uint8_t i = p; i < 10; i++) {
+//             CircuitPlayground.setPixelColor(i, 0x000000);
+//         }
+//
+//         lastUpdated = millis();
+//     }
+// }
+
+void MultiFunction::displayIllumination() {
+
+    if (millis() - lastUpdated > UPDATE_INTERVAL) {
+        uint16_t light1 = CircuitPlayground.lightSensor();
+        delay(100);
+        uint16_t light2 = CircuitPlayground.lightSensor();
+        uint16_t light = light1 > light2 ? light1 : light2;
+
+        // Map light to a number between 0 and 10*255 (10 NeoPixels, 255
+        // Brightness)
+        uint16_t adjLight = map(light, 0, 1023, 0, 2549);
+
+        Serial.print(light);
+        Serial.print(" <--> ");
+        Serial.println(adjLight);
+        // CircuitPlayground.clearPixels();
+
+        // Set full-on pixels
+        uint8_t pixelIndex = 0;
+        while (adjLight > 255) {
+            CircuitPlayground.setPixelColor(pixelIndex, 255, 255, 255);
+
+            adjLight -= 255;
+            pixelIndex += 1;
+        }
+
+        // Set last pixel to remainder l
+        CircuitPlayground.setPixelColor(pixelIndex++, adjLight, adjLight,
+                                        adjLight);
+
+        // Turn off the rest of the pixels
+        for (uint8_t i = pixelIndex; i < 10; i++) {
+            CircuitPlayground.setPixelColor(i, 0x000000);
+        }
+
+        lastUpdated = millis();
+    }
 }
 
 void MultiFunction::tilt() {
