@@ -1,5 +1,6 @@
-# Arduino
+# Mikros - Micro
 
-My playground for Arduino projects. 
+Playground for coding micro-controllers.
 
-All of these projects can be built and uploaded using PlatformIO (http://platformio.org).
+
+Many of these projects can be built and uploaded using PlatformIO (http://platformio.org).
