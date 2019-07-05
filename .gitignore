@@ -6,3 +6,4 @@ lib/Timer_ID75/
 lib/DallasTemperature_ID54/
 lib/OneWire_ID1/
 lib/RTC_ID83/
+.vscode/
