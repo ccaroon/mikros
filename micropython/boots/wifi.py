@@ -1,4 +1,5 @@
 import network
+import urequests
 import utime
 
 class MyNetwork:
@@ -7,14 +8,18 @@ class MyNetwork:
     APNT  = network.WLAN(network.AP_IF)
 
     @classmethod
-    def connect(cls):
+    def connect(cls, name, passwd):
         cls.WLAN.active(True)
 
-        print("ESSID: ")
-        essid = input()
+        essid = name
+        if not essid:
+            print("ESSID: ")
+            essid = input()
 
-        print("PASSWORD: ")
-        password = input()
+        password = passwd
+        if not password:
+            print("PASSWORD: ")
+            password = input()
 
         cls.WLAN.connect(essid, password)
 
@@ -28,6 +33,18 @@ class MyNetwork:
             print("Connected to '%s'" % (essid))
         else:
             print("Failed to connect to '%s'" % (essid))
+
+    @classmethod
+    def test(cls, url="http://api.open-notify.org/iss-now.json"):
+        resp = urequests.get(url)
+        if resp.status_code == 200:
+            return resp.json()
+        else:
+            return "Error GET'ting '%s': [%d]" % (url, resp.status_code)
+
+    @classmethod
+    def scan(cls):
+        return cls.WLAN.scan()
 
     @classmethod
     def check(cls):
