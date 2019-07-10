@@ -12,4 +12,11 @@ else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
 
+upload-file:
+ifneq ($(FILE),)
+	cp $(FILE) /media/$(USER)/CIRCUITPY/
+else
+	echo "ERROR: Must Specify a filename with FILE=filename"
+endif
+
 .PHONY: shell upload-as-main
