@@ -1,8 +1,7 @@
 # Circuit Python
 [Main Site](http://www.circuitpython.org)
 
-
-## Circuit Playground
-
-## PyGamer
-* NeoPixel on pin D8
+## Boards
+* [Circuit Playground](./docs/circuit_playground.md)
+* [PyGamer](./docs/pygamer.md)
+* [PyPortal](./docs/pyportal.md)
