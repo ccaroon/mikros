@@ -2,6 +2,8 @@
 import board
 import time
 
+from adafruit_pyportal import PyPortal
+
 # Status LED
 import simpleio
 
@@ -53,10 +55,36 @@ def neo_pixel():
         if new_clr <= min:
             inc = -inc
 
-# RTC
-# TODO
+# DateTime
+# NO RTC
+def date_time():
+    pp = PyPortal(
+        caption_text="Date & Time",
+        caption_font="./fonts/Arial-ItalicMT-17.bdf",
+        caption_position=(0,17),
+        caption_color=0x0,
+
+        text_font="./fonts/Helvetica-Bold-24.bdf",
+        text_position=(100,100),
+        text_color=0xFFFFFF,
+
+        status_neopixel=board.NEOPIXEL,
+        default_bg="./blue.bmp"
+        )
+
+    while True:
+        pp.get_local_time()
+        now = time.localtime()
+
+        time_str = "%02d:%02d:%02d" % (now.tm_hour, now.tm_min, now.tm_sec)
+        pp.set_text(time_str)
+
+        time.sleep(5)
 
 # Light Sensor
+# TODO
+
+# Touch Screen
 # TODO
 
 # Temperature Sensor
@@ -73,7 +101,7 @@ def temp_sensor():
         time.sleep(1)
 
 # Network
-# TODO
+# See lib/my_network.py
 
 # Adafruit IO
 # TODO
@@ -82,8 +110,8 @@ def temp_sensor():
 if __name__ == "__main__":
     # status_led()
     # neo_pixel()
-    temp_sensor()
-
+    # temp_sensor()
+    date_time()
 
 
 
