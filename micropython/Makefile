@@ -52,6 +52,12 @@ else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
 
+secrets.py: .secrets
+	./bin/gen_secrets.py
+	ampy --port $(PORT) put secrets.py
+
+list-files:
+	ampy --port $(PORT) ls
 
 shell:
 	picocom $(PORT) -b115200
