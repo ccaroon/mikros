@@ -10,12 +10,14 @@ AIO_USERNAME = secrets['aio_username']
 AOI_KEY = secrets['aio_key']
 AIO_URL = "https://io.adafruit.com/api/v2"
 
-dht22 = dht.DHT22(Pin(4))
-# ------------------------------------------------------------------------------
-# TODO:
-#   limit temp to whole number
-# ------------------------------------------------------------------------------
+MEASURE_FREQ = 1 * 60 # In Seconds
+RETRY_DELAY  = .05 * 60 # In Seconds
 
+red = Pin(0, Pin.OUT)
+blue = Pin(2, Pin.OUT)
+
+dht22 = dht.DHT22(Pin(14))
+# ------------------------------------------------------------------------------
 def publish_data(feed, data):
     resp = urequests.post(
         "%s/%s/feeds/%s/data" % (AIO_URL, AIO_USERNAME, feed),
@@ -49,26 +51,47 @@ def get_temperature():
 def get_humidity():
     dht22.measure()
     humD = dht22.humidity()
+    return humD
 
+def get_temp_and_humidity():
+    dht22.measure()
+
+    tempC = dht22.temperature()
+    tempF = tempC * 9/5 + 32
+
+    humD = dht22.humidity()
+
+    return {'tempF': tempF, 'tempC': tempC, 'humidity': humD}
+
+# NOTE: LED on/off is reversed. ON = off; OFF = on
 while (True):
-    temp = get_temperature()
+    red.on()
+    blue.on()
 
-    print("Temperature: [%f] [%d]" % (temp[1], round(temp[1])))
-    output = publish_data("weather", {"value": round(temp[1])})
+    try:
+        blue.off()
 
-    if output['success'] == False:
-        print("Publish Data Failed: %d\n%s" % (output['code'], output['msg']))
-    else:
-        print("Success [%s]" % (output['results']['id']))
+        data = get_temp_and_humidity()
 
-    time.sleep(30)
+        responses = []
+        temp_resp = publish_data("weather-station.temperature", {"value": round(data['tempF'])})
+        responses.append(temp_resp)
 
+        humd_resp = publish_data("weather-station.humidity",    {"value": round(data['humidity'])})
+        responses.append(humd_resp)
 
+        for resp in responses:
+            if resp['success']:
+                results = resp['results']
+                print("%s - %s: [%s]" % (results['id'], results['feed_key'], results['value']))
+            else:
+                error_msg = "Publish Error: %d - %s" % (resp['code'], resp['msg'])
+                raise Exception(error_msg)
 
-
-
-
-
-
-
-#
+        blue.on()
+        time.sleep(MEASURE_FREQ)
+    except Exception as e:
+        blue.on()
+        red.off()
+        print(e)
+        time.sleep(RETRY_DELAY)

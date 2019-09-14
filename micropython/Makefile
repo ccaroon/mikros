@@ -8,6 +8,9 @@ FIRMWARE_DIR=.firmware
 ESP32-1=http://micropython.org/resources/firmware/esp32-20190705-v1.11-126-g7c2e83324.bin
 ESP32-2=http://micropython.org/resources/firmware/esp32spiram-20190705-v1.11-126-g7c2e83324.bin
 
+noop:
+	@echo "Hello"
+
 download-firmware-esp32:
 	mkdir -p $(FIRMWARE_DIR)/esp32
 	curl --output $(FIRMWARE_DIR)/esp32/`basename $(ESP32-1)` $(ESP32-1)
