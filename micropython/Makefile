@@ -1,12 +1,9 @@
-MAC_PORT = "/dev/tty.SLAB_USBtoUART"
-LNX_PORT = "/dev/ttyUSB0"
-PORT = $(LNX_PORT)
-
 noop:
 	@echo "Hello"
 
+include Ports.mk
 include Firmware.mk
-include Upload.mk
+include FileMgmt.mk
 
 # Other
 boot-esp8266:
@@ -16,22 +13,13 @@ boot-esp8266:
 
 install-app:
 ifneq ($(APP),)
-	# ampy --port $(PORT) put $(APP)
 	make -C $(APP) install
 else
 	echo "ERROR: Must Specify an application with APP=app-name"
 endif
 
-secrets.py: .secrets
-	./bin/gen_secrets.py
-	ampy --port $(PORT) put secrets.py
-
-list-files:
-	ampy --port $(PORT) ls
-
 shell:
 	picocom $(PORT) -b115200
 
 
-
-.PHONY: noop boot-esp8266 list-files shell
+.PHONY: noop boot-esp8266 install-app shell

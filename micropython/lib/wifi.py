@@ -2,7 +2,7 @@ import network
 import urequests
 import utime
 
-class MyNetwork:
+class MyWifi:
 
     WLAN = network.WLAN(network.STA_IF)
     APNT  = network.WLAN(network.AP_IF)

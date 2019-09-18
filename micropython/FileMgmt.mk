@@ -22,3 +22,17 @@ ifneq ($(FILE),)
 else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
+
+list-files:
+	ampy --port $(PORT) ls
+
+get-file:
+ifneq ($(FILE),)
+	ampy --port $(PORT) get $(FILE) > /tmp/$(FILE)
+else
+	echo "ERROR: Must Specify a filename with FILE=filename"
+endif
+
+secrets.py: .secrets
+	./bin/gen_secrets.py
+	ampy --port $(PORT) put secrets.py
