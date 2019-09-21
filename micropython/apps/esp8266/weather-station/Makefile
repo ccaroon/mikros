@@ -1,22 +1,22 @@
 include ../../../Ports.mk
 include ../../../FileMgmt.mk
 
-install: main.py libs weather_station.py
-	# make secrets.py
-	# make upload-as-main FILE=$(CURDIR)/main.py
-	# make upload-file FILE=$(CURDIR)/weather_station.py
+APP  = main.pyc weather_station.pyc
+LIBS = ../../../lib/adafruit_io.pyc ../../../lib/clock.pyc ../../../lib/indicator.pyc ../../../lib/wifi.pyc
 
-main.py:
-	make upload-as-main FILE=$(CURDIR)/main.py
+%.pyc: %.py
+	touch $@
+	make upload-file FILE=$(CURDIR)/$<
 
-weather_station.py:
-	make upload-file FILE=$(CURDIR)/weather_station.py
+../../../lib/%.pyc: ../../../lib/%.py
+	touch $@
+	make upload-file FILE=$(CURDIR)/$<
 
-libs:
-	make upload-file FILE=../../../lib/adafruit_io.py
-	make upload-file FILE=../../../lib/clock.py
-	make upload-file FILE=../../../lib/indicator.py
-	make upload-file FILE=../../../lib/wifi.py
+install: $(APP) $(LIBS)
 
+libs: $(LIBS)
 
-.PHONY: install main.py weather_station.py libs
+clean:
+	rm -rf *.pyc
+
+.PHONY: install libs clean

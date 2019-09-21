@@ -1,3 +1,4 @@
 .firmware/
 .secrets
 secrets.py
+*.pyc

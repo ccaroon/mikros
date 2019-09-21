@@ -9,10 +9,13 @@ class AdafruitIO:
 
         self.__suffix = suffix
 
-    def publish_data(self, feed, data, dry_run = False):
+    # TODO: use kwargs for non-required feed data fields
+    def publish_data(self, feed, value, dry_run = False):
         feed_name = feed
         if self.__suffix:
             feed_name = "%s-%s" % (feed, self.__suffix)
+
+        data = {"value": value}
 
         url = "%s/%s/feeds/%s/data" % (AdafruitIO.BASE_URL, self.__username, feed_name)
         headers = {'X-AIO-Key': self.__key}

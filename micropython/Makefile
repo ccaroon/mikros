@@ -21,5 +21,7 @@ endif
 shell:
 	picocom $(PORT) -b115200
 
+clean:
+	rm -rf lib/*.pyc
 
-.PHONY: noop boot-esp8266 install-app shell
+.PHONY: noop boot-esp8266 install-app shell clean
