@@ -1,9 +1,11 @@
+include ../../../Ports.mk
+include ../../../FileMgmt.mk
 
 noop:
 	@echo "Test Tube Application"
 
-install: main.py
-	@echo "INSTALL"
+BOOT = ../../../boots/esp8266.pyc
+APP  = main.pyc
+LIBS = ../../../lib/clock.pyc ../../../lib/wifi.pyc
 
-main.py:
-	make -C ../../.. upload-file FILE=main.py
+include ../App.mk

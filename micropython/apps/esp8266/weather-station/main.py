@@ -1,3 +1,4 @@
+import logging
 import time
 
 from adafruit_io import AdafruitIO
@@ -15,6 +16,10 @@ last_error = None
 aio      = AdafruitIO(aio_group, secrets)
 indicate = Indicator()
 station  = WeatherStation(14)
+
+log_stream = open("weather-station.log", "a")
+logging.basicConfig(stream=log_stream, level=logging.INFO)
+ws_log = logging.getLogger("weather-station")
 
 def handle_aio_response(resp):
     if resp['success'] and resp.get('dry_run', False):
@@ -53,14 +58,18 @@ while (True):
         indicate.blue(False)
         indicate.red(True)
 
-        print("Error: %s" % (e))
+        msg = str(e)
+        print(msg)
+        ws_log.error(msg)
 
         if str(last_error) != str(e):
             resp = aio.publish_data("errors", str(e), dry_run)
             try:
                 handle_aio_response(resp)
             except Exception as e2:
-                print("Failed to publish error: " % (e2))
+                msg = "Failed to publish: " % (e2)
+                print(msg)
+                ws_log.critical(msg)
 
             last_error = e
 

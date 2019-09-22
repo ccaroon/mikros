@@ -3,17 +3,18 @@
 ## ToDo
 * [ ] Record daily high
 * [ ] Record daily low
-* [x] Publish errors to AIO
-* [ ] Log error to file
-    - log rotation
 * [ ] Blynk App
 * [ ] Alexa App
+* [ ] Error Handling
+    - [x] Publish errors to AIO
+    - [x] Log error to file w/ log rotation
+    - [ ] Reset self on crit errors?
 
 ### High / Low
 * [x] RTC
 * [ ] Sync with Internet time once per day
 * [ ] Reset high & low at midnight
-* [x] MyTime class
+* [x] MyClock class
 
 ### Blynk
 * JS app running on Raspberry Pi

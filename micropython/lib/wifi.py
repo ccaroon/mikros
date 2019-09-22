@@ -2,6 +2,8 @@ import network
 import urequests
 import utime
 
+import secrets
+
 class MyWifi:
 
     WLAN = network.WLAN(network.STA_IF)
@@ -33,6 +35,10 @@ class MyWifi:
             print("Connected to '%s'" % (essid))
         else:
             print("Failed to connect to '%s'" % (essid))
+
+    @classmethod
+    def autoconnect(cls):
+        cls.connect(secrets.secrets['ssid'], secrets.secrets['password'])
 
     @classmethod
     def test(cls, url="http://api.open-notify.org/iss-now.json"):
