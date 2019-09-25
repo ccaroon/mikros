@@ -1,7 +1,9 @@
 import upip
+import uos
 
-from clock import MyClock
+from chronos import Chronos
 
-upip.install("logging")
+if "logging.py" not in uos.listdir('/lib'):
+    upip.install("logging")
 
-MyClock.sync()
+Chronos.sync()

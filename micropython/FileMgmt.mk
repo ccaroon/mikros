@@ -33,6 +33,13 @@ else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
 
+rm-file:
+ifneq ($(FILE),)
+	ampy --port $(PORT) rm $(FILE)
+else
+	echo "ERROR: Must Specify a filename with FILE=filename"
+endif
+
 secrets.py: .secrets
 	./bin/gen_secrets.py
 	ampy --port $(PORT) put secrets.py

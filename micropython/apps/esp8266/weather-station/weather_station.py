@@ -1,34 +1,48 @@
-from machine import Pin
-
-import dht
+from adafruit_io import AdafruitIO
+from sensor import Sensor
 
 class WeatherStation:
-    def __init__(self, pin = 14):
-        self.__sensor = dht.DHT22(Pin(pin))
 
-    def get_temperature(self):
-        self.__sensor.measure()
+    def __init__(self, name):
+        self.__name = name
 
-        tempC = self.__sensor.temperature()
-        tempF = WeatherStation.convertCtoF(tempC)
+        self.__aio     = AdafruitIO(name)
+        self.__sensor  = Sensor(14)
 
-        return {'tempC': tempC, 'tempF': tempF}
+        self.reset_high_low()
 
-    def get_humidity(self):
-        self.__sensor.measure()
-        humD = self.__sensor.humidity()
-        return humD
+    def name(self):
+        return self.__name
 
-    def get_temp_and_humidity(self):
-        self.__sensor.measure()
+    def measure(self, publish=True):
+        data = self.__sensor.get_temp_and_humidity()
 
-        tempC = self.__sensor.temperature()
-        tempF = WeatherStation.convertCtoF(tempC)
+        self.__update_high_temp(data['tempF'], publish)
+        self.__update_low_temp(data['tempF'], publish)
 
-        humD = self.__sensor.humidity()
+        responses = []
 
-        return {'tempF': tempF, 'tempC': tempC, 'humidity': humD}
+        temp_resp = self.__aio.publish_data("temperature", round(data['tempF']), not publish)
+        responses.append(temp_resp)
 
-    @classmethod
-    def convertCtoF(cls, tempC):
-        return (tempC * 9/5 + 32)
+        humd_resp = self.__aio.publish_data("humidity", round(data['humidity']), not publish)
+        responses.append(humd_resp)
+
+        for resp in responses:
+            self.__aio.handle_response(resp)
+
+    def reset_high_low(self):
+        self.__temp_high = -999
+        self.__temp_low  = 999
+
+    def __update_high_temp(self, tempF, publish):
+        if tempF > self.__temp_high:
+            self.__temp_high = tempF
+            resp = self.__aio.publish_data("temperature-high", round(tempF), not publish)
+            self.__aio.handle_response(resp)
+
+    def __update_low_temp(self, tempF, publish):
+        if tempF < self.__temp_low:
+            self.__temp_low = tempF
+            resp = self.__aio.publish_data("temperature-low", round(tempF), not publish)
+            self.__aio.handle_response(resp)

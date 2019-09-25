@@ -1,11 +1,12 @@
+import secrets
 import urequests
 
 class AdafruitIO:
     BASE_URL = "https://io.adafruit.com/api/v2"
 
-    def __init__(self, group, secrets):
-        self.__username = secrets['aio_username']
-        self.__key      = secrets['aio_key']
+    def __init__(self, group):
+        self.__username = secrets.secrets['aio_username']
+        self.__key      = secrets.secrets['aio_key']
 
         self.__group_name = group
 
@@ -46,3 +47,23 @@ class AdafruitIO:
                 }
 
         return (output)
+
+    def handle_response(self, resp):
+        if resp['success'] and resp.get('dry_run', False):
+            results = resp['results']
+            print("DRY RUN: [%s] -> %s" % (results['data']['value'], results['url']))
+        elif resp['success']:
+            results = resp['results']
+            print("%s - %s: [%s]" % (results['id'], results['feed_key'], results['value']))
+        else:
+            error_msg = "AIO: [%s] -> [%s] | %d - %s " % (resp['value'], resp['feed'], resp['code'], resp['msg'])
+            raise Exception(error_msg)
+
+
+
+
+
+
+
+
+#
