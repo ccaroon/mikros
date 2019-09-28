@@ -91,8 +91,13 @@ class Chronos:
                 cron['last_run'] = now
 
     @classmethod
+    def now_str(cls):
+        now = cls.CLOCK.datetime()
+        return "%4d-%02d-%02d @ %02d:%02d:%02d" % (now[0], now[1], now[2], now[4], now[5], now[6])
+
+    @classmethod
     def check(cls):
-        print(cls.CLOCK.datetime())
+        print(cls.now_str())
 
     @classmethod
     def __convert_period_to_seconds(cls, value, units):

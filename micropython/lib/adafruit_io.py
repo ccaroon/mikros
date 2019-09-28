@@ -11,7 +11,8 @@ class AdafruitIO:
         self.__group_name = group
 
     # TODO: use kwargs for non-required feed data fields
-    def publish_data(self, feed, value, dry_run = False):
+    def publish_data(self, feed, value, **kwargs):
+        dry_run = kwargs.get('dry_run', False)
         feed_name = "%s.%s" % (self.__group_name, feed)
         data = {"value": value}
 
