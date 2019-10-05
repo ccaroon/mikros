@@ -1,4 +1,5 @@
 import ujson
+import os
 
 from adafruit_io import AdafruitIO
 from sensor import Sensor
@@ -71,9 +72,8 @@ class WeatherStation:
             self.__publish = state['publish']
             self.__temp_high = state['temp_high']
             self.__temp_low = state['temp_low']
-
         except Exception as e:
-            pass
+            print("WeatherStation: Failed to load state: ", e)
 
     def __update_high_temp(self, tempF):
         if tempF > self.__temp_high:

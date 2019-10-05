@@ -12,7 +12,7 @@ RETRY_DELAY  = 1.00 * 60 # In Seconds
 dry_run = False
 last_error = None
 
-station = WeatherStation('weather-station-dev', maintain_state=True, publish=not dry_run)
+station = WeatherStation('weather-station', maintain_state=True, publish=not dry_run)
 
 indicate = Indicator()
 aio = AdafruitIO(station.name())
@@ -87,4 +87,4 @@ while (True):
 
 
 
-#
+#                           ----- EOF -----                                    #
