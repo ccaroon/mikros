@@ -1,7 +1,10 @@
 import ujson
 import os
 
+# import blynklib
+
 from adafruit_io import AdafruitIO
+from log_file import LogFile
 from sensor import Sensor
 
 class WeatherStation:
@@ -15,10 +18,10 @@ class WeatherStation:
         self.__publish = kwargs.get("publish", True)
         self.__maintain_state = kwargs.get("maintain_state", False)
 
-        self.reset_high_low()
+        self.__log = LogFile.get_logger("WeatherStation")
 
-        if self.__maintain_state:
-            self.__load_state()
+        self.reset_high_low()
+        self.__load_state()
 
     def name(self):
         return self.__name
@@ -46,34 +49,38 @@ class WeatherStation:
         for resp in responses:
             self.__aio.handle_response(resp)
 
-        if self.__maintain_state:
-            self.__save_state()
+        self.__save_state()
 
     def reset_high_low(self):
         self.__temp_high = -999
         self.__temp_low  = 999
 
     def __save_state(self):
-        state = {
-            "publish": self.__publish,
-            "temp_high": self.__temp_high,
-            "temp_low": self.__temp_low
-        }
-        with open("%s.json" % self.__name, "w") as file:
-            ujson.dump(state, file)
+        if self.__maintain_state:
+            state = {
+                "publish": self.__publish,
+                "temp_high": self.__temp_high,
+                "temp_low": self.__temp_low
+            }
+            try:
+                with open("%s.json" % self.__name, "w") as file:
+                    ujson.dump(state, file)
+            except Exception as e:
+                self.__log.error("Failed to save state: ", e)
 
     def __load_state(self):
-        filename = "%s.json" % self.__name
-        try:
-            os.stat(filename)
-            with open(filename, "r") as file:
-                state = ujson.load(file)
+        if self.__maintain_state:
+            filename = "%s.json" % self.__name
+            try:
+                os.stat(filename)
+                with open(filename, "r") as file:
+                    state = ujson.load(file)
 
-            self.__publish = state['publish']
-            self.__temp_high = state['temp_high']
-            self.__temp_low = state['temp_low']
-        except Exception as e:
-            print("WeatherStation: Failed to load state: ", e)
+                self.__publish = state['publish']
+                self.__temp_high = state['temp_high']
+                self.__temp_low = state['temp_low']
+            except Exception as e:
+                self.__log.error("Failed to load state: ", e)
 
     def __update_high_temp(self, tempF):
         if tempF > self.__temp_high:

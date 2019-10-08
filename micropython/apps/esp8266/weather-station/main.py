@@ -1,10 +1,11 @@
-import logging
 import time
 
 from adafruit_io import AdafruitIO
 from chronos import Chronos
 from indicator import Indicator
+from log_file import LogFile
 from weather_station import WeatherStation
+
 
 MEASURE_FREQ = 1.00 * 60 # In Seconds
 RETRY_DELAY  = 1.00 * 60 # In Seconds
@@ -17,15 +18,14 @@ station = WeatherStation('weather-station', maintain_state=True, publish=not dry
 indicate = Indicator()
 aio = AdafruitIO(station.name())
 
-log_stream = open("%s.log" % station.name(), "a")
-logging.basicConfig(stream=log_stream, level=logging.INFO)
-ws_log = logging.getLogger(station.name())
+LogFile.init(station.name())
+main_log = LogFile.get_logger("main")
 
 # Publish boot notification w/ datetime
-aio.publish_data("notifications",
-    "Boot: %s" % (Chronos.now_str()),
-    dry_run=dry_run
-)
+# aio.publish_data("notifications",
+#     "Boot: %s" % (Chronos.now_str()),
+#     dry_run=dry_run
+# )
 
 # TODO: move this to Chronos
 # (2019, 9, 25, 15, 57, 58, 2, 268)
@@ -61,9 +61,9 @@ while (True):
 
         msg = str(e)
         print(msg)
-        ws_log.error(msg)
+        main_log.error(msg)
 
-        # TODO: network check
+        # TODO: network check??
 
         if str(last_error) != str(e):
             resp = aio.publish_data("notifications", str(e), dry_run=dry_run)
@@ -72,7 +72,7 @@ while (True):
             except Exception as e2:
                 msg = "Failed to publish error: " % (e2)
                 print(msg)
-                ws_log.critical(msg)
+                main_log.critical(msg)
 
             last_error = e
 

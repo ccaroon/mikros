@@ -42,4 +42,5 @@ endif
 
 secrets.py: .secrets
 	./bin/gen_secrets.py
-	ampy --port $(PORT) put secrets.py
+	mpy-cross secrets.py
+	ampy --port $(PORT) put secrets.mpy

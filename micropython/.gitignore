@@ -2,3 +2,4 @@
 .secrets
 secrets.py
 *.pyc
+*.mpy

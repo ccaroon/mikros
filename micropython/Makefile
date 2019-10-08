@@ -22,7 +22,7 @@ shell:
 	picocom $(PORT) -b115200
 
 clean:
-	rm -rf boots/*.pyc
-	rm -rf lib/*.pyc
+	find . -name "*.pyc" -exec rm -rf {} +
+	find . -name "*.mpy" -exec rm -rf {} +
 
 .PHONY: noop boot-esp8266 install-app shell clean

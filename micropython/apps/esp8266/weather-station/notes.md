@@ -1,8 +1,8 @@
 # Weather Station
 
 ## ToDo
-* [ ] Record daily high
-* [ ] Record daily low
+* [x] Record daily high
+* [x] Record daily low
 * [ ] Blynk App
 * [ ] Alexa App
 * [ ] Error Handling
@@ -13,7 +13,7 @@
 ### High / Low
 * [x] RTC
 * [ ] Sync with Internet time once per day
-* [ ] Reset high & low at midnight
+* [x] Reset high & low at midnight
 * [x] MyClock class
 
 ### Blynk

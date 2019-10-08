@@ -4,9 +4,10 @@ include ../../../FileMgmt.mk
 noop:
 	@echo "Weather Station"
 
+# NOTE: boot and main **must** be .py files ... not .mpy
 BOOT = ../../../boots/esp8266.pyc
-APP  = main.pyc sensor.pyc weather_station.pyc
-LIBS = ../../../lib/adafruit_io.pyc ../../../lib/chronos.pyc ../../../lib/indicator.pyc ../../../lib/wifi.pyc
+APP  = main.pyc sensor.mpy weather_station.mpy
+LIBS = ../../../lib/adafruit_io.mpy ../../../lib/chronos.mpy ../../../lib/indicator.mpy ../../../lib/log_file.mpy ../../../lib/wifi.mpy
 
 include ../App.mk
 

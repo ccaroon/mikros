@@ -13,6 +13,19 @@ default:
 	touch $@
 	make upload-as-boot FILE=$(CURDIR)/$<
 
+%.mpy: %.py
+	mpy-cross $<
+	make upload-file FILE=$(CURDIR)/$@
+
+../../../lib/%.mpy: ../../../lib/%.py
+	mpy-cross $<
+	make upload-file FILE=$(CURDIR)/$@
+
+# `boot.py` must be `boot.py` NOT `boot.mpy`
+# ../../../boots/%.mpy: ../../../boots/%.py
+# 	mpy-cross $<
+# 	make upload-as-boot FILE=$(CURDIR)/$@
+
 install: $(BOOT) $(APP) $(LIBS)
 
 boot: $(BOOT)
@@ -23,5 +36,6 @@ libs: $(LIBS)
 
 clean:
 	rm -rf *.pyc
+	rm -rf *.mpy
 
 .PHONY: install libs clean

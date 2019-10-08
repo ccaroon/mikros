@@ -13,3 +13,7 @@ def delete_all_files(path="."):
                 print("(D) %s ... OK" % (full_name))
             else:
                 print("%s ... %s" % (full_name, e))
+
+def list(path = '.'):
+    for file in os.listdir(path):
+        print(file)
