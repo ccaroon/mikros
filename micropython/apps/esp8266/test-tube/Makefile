@@ -6,6 +6,6 @@ noop:
 
 BOOT = ../../../boots/esp8266.pyc
 APP  = main.pyc
-LIBS = ../../../lib/chronos.pyc ../../../lib/wifi.pyc
+LIBS = ../../../lib/blynklib.mpy ../../../lib/chronos.mpy ../../../lib/wifi.mpy
 
 include ../App.mk

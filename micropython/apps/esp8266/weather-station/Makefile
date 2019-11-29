@@ -5,9 +5,11 @@ noop:
 	@echo "Weather Station"
 
 # NOTE: boot and main **must** be .py files ... not .mpy
-BOOT = ../../../boots/esp8266.pyc
+BOOT = ../../../boots/weather_station.pyc
+# BOOT = ../../../boots/simple.pyc
 APP  = main.pyc sensor.mpy weather_station.mpy
-LIBS = ../../../lib/adafruit_io.mpy ../../../lib/chronos.mpy ../../../lib/indicator.mpy ../../../lib/log_file.mpy ../../../lib/wifi.mpy
+# LIBS = ../../../lib/adafruit_io.mpy ../../../lib/chronos.mpy ../../../lib/indicator.mpy ../../../lib/log_file.mpy ../../../lib/notifier.mpy ../../../lib/wifi.mpy
+LIBS = ../../../lib/adafruit_io.mpy ../../../lib/chronos.mpy ../../../lib/indicator.mpy ../../../lib/wifi.mpy ../../../lib/file_utils.mpy
 
 include ../App.mk
 

@@ -4,7 +4,7 @@ import os
 # import blynklib
 
 from adafruit_io import AdafruitIO
-from log_file import LogFile
+# from log_file import LogFile
 from sensor import Sensor
 
 class WeatherStation:
@@ -18,7 +18,7 @@ class WeatherStation:
         self.__publish = kwargs.get("publish", True)
         self.__maintain_state = kwargs.get("maintain_state", False)
 
-        self.__log = LogFile.get_logger("WeatherStation")
+        # self.__log = LogFile.get_logger("WeatherStation")
 
         self.reset_high_low()
         self.__load_state()
@@ -66,7 +66,8 @@ class WeatherStation:
                 with open("%s.json" % self.__name, "w") as file:
                     ujson.dump(state, file)
             except Exception as e:
-                self.__log.error("Failed to save state: ", e)
+                pass
+                # self.__log.error("Failed to save state: ", str(e))
 
     def __load_state(self):
         if self.__maintain_state:
@@ -80,7 +81,8 @@ class WeatherStation:
                 self.__temp_high = state['temp_high']
                 self.__temp_low = state['temp_low']
             except Exception as e:
-                self.__log.error("Failed to load state: ", e)
+                pass
+                # self.__log.error("Failed to load state: ")
 
     def __update_high_temp(self, tempF):
         if tempF > self.__temp_high:
