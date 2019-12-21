@@ -1,3 +1,4 @@
+# micropython.org/download
 FIRMWARE_DIR=.firmware
 
 # ESP 32
@@ -14,7 +15,7 @@ install-firmware-esp32: download-firmware-esp32
 	esptool.py --chip esp32 --port $(PORT) write_flash -z 0x1000 $(FIRMWARE_DIR)/esp32/`basename $(ESP32-2)`
 
 # ESP 8266
-ESP8266=http://micropython.org/resources/firmware/esp8266-20190529-v1.11.bin
+ESP8266=http://micropython.org/resources/firmware/esp8266-20191220-v1.12.bin
 
 download-firmware-esp8266:
 	mkdir -p $(FIRMWARE_DIR)/esp8266
@@ -26,3 +27,6 @@ install-firmware-esp8266: download-firmware-esp8266
 
 clean-firmware:
 	rm -rf $(FIRMWARE_DIR)
+
+# PyBoard v1.1
+# Coming Soon
