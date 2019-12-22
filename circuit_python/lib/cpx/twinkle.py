@@ -1,8 +1,7 @@
 import time
 import random
 
-from adafruit_circuitplayground.express import cpx
-
+from adafruit_circuitplayground import cp
 ################################################################################
 class Twinkle:
     RED    = (255,0,0)
@@ -31,7 +30,7 @@ class Twinkle:
     def set_color(self, color = (0,0,0)):
         '''Set all 10 pixels to the same color'''
         for i in range(10):
-            cpx.pixels[i] =  color
+            cp.pixels[i] =  color
 
     def clear_all(self):
         '''Turn off all 10 pixels'''
@@ -52,7 +51,7 @@ class Twinkle:
         self.clear_all()
         for i in range(count):
             p = random.randint(0,9)
-            cpx.pixels[p] = self._twinkle_curr_color
+            cp.pixels[p] = self._twinkle_curr_color
 
         # Get next color in the transition
         if self._loop_count % 10 == 0:
@@ -103,4 +102,3 @@ class Twinkle:
         self.twinkle()
 
         self._loop_count += 1
-

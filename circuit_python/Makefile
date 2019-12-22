@@ -19,8 +19,10 @@ else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
 
-secrets.py: .secrets
-	./bin/gen_secrets.py
-	cp secrets.py /media/$(USER)/CIRCUITPY/
+secrets: lib/secrets.py
 
-.PHONY: shell upload-as-main
+lib/secrets.py: .secrets
+	./bin/gen_secrets.py
+	cp lib/secrets.py /media/$(USER)/CIRCUITPY/
+
+.PHONY: shell upload-as-main upload-file
