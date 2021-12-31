@@ -15,7 +15,13 @@ install-firmware-esp32: download-firmware-esp32
 	esptool.py --chip esp32 --port $(PORT) write_flash -z 0x1000 $(FIRMWARE_DIR)/esp32/`basename $(ESP32-2)`
 
 # ESP 8266
-ESP8266=http://micropython.org/resources/firmware/esp8266-20191220-v1.12.bin
+# ------------------------------------------------------------------------------
+# 512k - https://micropython.org/resources/firmware/esp8266-512k-20210902-v1.17.bin
+# 1MiB - https://micropython.org/resources/firmware/esp8266-1m-20210902-v1.17.bin
+# 2MiB - https://micropython.org/resources/firmware/esp8266-20210902-v1.17.bin
+# ------------------------------------------------------------------------------
+# ESP8266=http://micropython.org/resources/firmware/esp8266-20191220-v1.12.bin
+ESP8266=https://micropython.org/resources/firmware/esp8266-20210902-v1.17.bin
 
 download-firmware-esp8266:
 	mkdir -p $(FIRMWARE_DIR)/esp8266
