@@ -16,9 +16,9 @@ install-firmware-esp32: download-firmware-esp32
 
 # ESP 8266
 # ------------------------------------------------------------------------------
-# 512k - https://micropython.org/resources/firmware/esp8266-512k-20210902-v1.17.bin
-# 1MiB - https://micropython.org/resources/firmware/esp8266-1m-20210902-v1.17.bin
-# 2MiB - https://micropython.org/resources/firmware/esp8266-20210902-v1.17.bin
+# 512k  - https://micropython.org/resources/firmware/esp8266-512k-20210902-v1.17.bin
+# 1MiB  - https://micropython.org/resources/firmware/esp8266-1m-20210902-v1.17.bin
+# 2MiB+ - https://micropython.org/resources/firmware/esp8266-20210902-v1.17.bin
 # ------------------------------------------------------------------------------
 # ESP8266=http://micropython.org/resources/firmware/esp8266-20191220-v1.12.bin
 ESP8266=https://micropython.org/resources/firmware/esp8266-20210902-v1.17.bin
