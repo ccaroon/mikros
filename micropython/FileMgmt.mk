@@ -23,6 +23,13 @@ else
 	echo "ERROR: Must Specify a filename with FILE=filename"
 endif
 
+upload-dir:
+ifneq ($(DIR),)
+	ampy --port $(PORT) put $(DIR)
+else
+	echo "ERROR: Must Specify a directory with DIR=path"
+endif
+
 list-files:
 	ampy --port $(PORT) ls
 

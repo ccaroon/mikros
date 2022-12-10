@@ -1,7 +1,8 @@
 import time
 import random
 
-from adafruit_circuitplayground import cp
+# from adafruit_circuitplayground import cp
+from adafruit_circuitplayground.express import cp
 ################################################################################
 class Twinkle:
     RED    = (255,0,0)

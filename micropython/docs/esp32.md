@@ -23,6 +23,13 @@
 * SDIO master/slave 50 MHz
 * SD-card interface support
 
+## Power
+* GND - this is the common ground for all power and logic
+* BAT - this is the positive voltage to/from the JST jack for the optional Lipoly battery
+* USB - this is the positive voltage to/from the micro USB jack if connected
+* EN - this is the 3.3V regulator's enable pin. It's pulled up, so connect to ground to disable the 3.3V regulator
+* 3V - this is the output from the 3.3V regulator. The regulator can supply 500mA peak but half of that is drawn by the ESP32, and it's a fairly power-hungry chip. So if you need a ton of power for stuff like LEDs, motors, etc. Use the USB or BAT pins, and an additional regulator
+
 ## RTC
     from machine import RTC
     #            (YYYY, MM, DD,  TZ , HH, mm, SS, MS)
