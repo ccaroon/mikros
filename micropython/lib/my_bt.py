@@ -11,11 +11,11 @@ import uasyncio
 class MyBT:
 
     @classmethod
-    def find_devices(cls):
-        uasyncio.run(cls.__find_devices())
+    def find_devices(cls, timeout=5000):
+        uasyncio.run(cls.__find_devices(timeout))
 
     @classmethod
-    async def __find_devices(cls):
+    async def __find_devices(cls, timeout=5000):
         async with aioble.scan(5000) as scanner:
             async for result in scanner:
                 # if result.name():
