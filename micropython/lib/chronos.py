@@ -1,9 +1,7 @@
 import re
 
-# time.mktime() : tuple -> seconds
-# time.localtime() : seconds -> tuple
+import ntptime
 import time
-import urequests
 
 from machine import RTC
 
@@ -15,44 +13,25 @@ class Chronos:
         pass
 
     @classmethod
-    def sync(cls):
+    def sync(cls, tz_offset=-5):
         """Sync with 'Internet' Time"""
-        data = None
+        # TODO: How to handle DST
+        ntptime.host = "time.nist.gov"
+        now_secs = ntptime.time()
+        tm = time.gmtime(now_secs)
 
-        resp = urequests.get("http://worldclockapi.com/api/json/est/now")
-        if resp.status_code == 200:
-            data = resp.json()
-        else:
-            raise Exception("Error Sync'ing Time: [%d]" % (resp.status_code))
-
-
-        # 2019-09-17T17:40-04:00
-        current_time = data['currentDateTime']
-
-        matches = re.match("(\d+)-(\d+)-(\d+)T(\d+):(\d+)(\+|-)(\d+):(\d+)", current_time)
-
-        if not matches:
-            raise Exception("Error Parsing DateTime: %s" % (current_time))
-
-        now = []
-
-        # 1-3 == YYYY, MM, DD
-        for i in range(1,4):
-            now.append(int(matches.group(i)))
-
-        # 6-7 == (+|-), TZOffset
-        tz = int(matches.group(7))
-        if matches.group(6) == '-':
-            tz *= -1
-        now.append(tz)
-
-        # 4-5 = HH, mm
-        for i in range(4,6):
-            now.append(int(matches.group(i)))
-        # Add seconds, milliseconds
-        now.extend((0,0))
-
-        cls.CLOCK.datetime(now)
+        cls.CLOCK.datetime(
+            (
+                # year, month, day
+                tm[0], tm[1], tm[2],
+                # weekday
+                tm[6] + 1,
+                # hours, minutes, seconds
+                tm[3] + tz_offset, tm[4], tm[5],
+                # sub-seconds
+                0
+            )
+        )
 
     @classmethod
     def every(cls, period, name, handler, **kwargs):
@@ -84,10 +63,10 @@ class Chronos:
             passed = now - cron['last_run']
 
             if debug:
-                print("%s - Time Passed: %ds / %ds" % (name, passed, cron['period']))
+                print("Chronos.tick(%s) - Time Passed: %ds / %ds" % (name, passed, cron['period']))
 
             if  passed >= cron['period']:
-                cron['handler']()
+                cron['handler'](now)
                 cron['last_run'] = now
 
     @classmethod
@@ -111,11 +90,3 @@ class Chronos:
             seconds = value * 60
 
         return (seconds)
-
-
-
-
-
-
-
-#
