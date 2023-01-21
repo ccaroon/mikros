@@ -38,7 +38,10 @@ class MyWifi:
 
     @classmethod
     def autoconnect(cls):
-        cls.connect(secrets.secrets['ssid'], secrets.secrets['password'])
+        if cls.WLAN.isconnected():
+            print("Already connected to '%s'" % (cls.WLAN.config('essid')))
+        else:
+            cls.connect(secrets.secrets['ssid'], secrets.secrets['password'])
 
     @classmethod
     def test(cls, url="http://api.open-notify.org/iss-now.json"):
