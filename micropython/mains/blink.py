@@ -12,3 +12,20 @@ while True:
     red.on()
     blue.off()
     utime.sleep(.5)
+
+# def beat(delay=250, count=5):
+#     pin.off()
+
+#     for i in range(count):
+#         print(i)
+
+#         pin.on()
+#         time.sleep_ms(int(delay/2))
+#         pin.off()
+#         time.sleep_ms(int(delay/2))
+
+#         pin.on()
+#         time.sleep_ms(int(delay/2))
+#         pin.off()
+
+#         time.sleep_ms(delay*3)
