@@ -15,6 +15,6 @@ def pulse(delay=150, step=8000, count=5):
             pwm.duty_u16(brightness)
             time.sleep_ms(delay)
 
-        for brightness in range(65535, start, step * -1):
+        for brightness in range(65534, start, step * -1):
             pwm.duty_u16(brightness)
             time.sleep_ms(delay)
