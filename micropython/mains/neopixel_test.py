@@ -5,13 +5,13 @@ from neopixel import NeoPixel
 
 # MicroMod: G0 == Pin-15
 # Huzzah-32: 15
-pin_num = 15
+pin_num = 8
 
 # Number of Pixel in board/strip/matrix
-num_pixels = 40
+num_pixels = 10
 
 # RGB == 3 | RGBW == 4
-bits_per_pixel = 4
+bits_per_pixel = 3
 
 pin = Pin(pin_num, Pin.OUT)
 np = NeoPixel(pin, num_pixels, bpp=bits_per_pixel)
