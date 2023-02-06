@@ -19,7 +19,7 @@ def poll_feed(aio, neo):
     data = aio.get_data("demo")
     color_name = data["results"][0]["value"]
 
-    print(color_name)
+    # print(color_name)
 
     if color_name == "roy.g.biv":
         neo[0] = COLORS["red"]
