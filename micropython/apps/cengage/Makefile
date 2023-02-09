@@ -1,5 +1,10 @@
 default:
-	@echo "** Cengage **"
+	@echo "##### Cengage DevOps Guild Demo #####"
+	@echo "* install-boot-main"
+	@echo "* install-shared"
+	@echo "* install-led"
+	@echo "* install-neo"
+	@echo "* shell"
 
 include ../../Ports.mk
 include ../../Firmware.mk
