@@ -45,7 +45,8 @@ install-firmware-esp32: download-firmware-esp32
 
 # ESP 8266 --------------------------------------------------------------------
 ## Generic
-ESP8266-GENERIC=esp8266-20220618-v1.19.1.bin
+# ESP8266-GENERIC=esp8266-20220618-v1.19.1.bin
+ESP8266-GENERIC=esp8266-20230426-v1.20.0.bin
 
 ESP8266=$(ESP8266-GENERIC)
 
