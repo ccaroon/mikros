@@ -26,7 +26,8 @@ ESP32-SPIRAM=esp32spiram-20220618-v1.19.1.bin
 
 ## OTA
 ##   - AdaFruit Huzzah-32 Feather
-ESP32-OTA=esp32-ota-20220618-v1.19.1.bin
+# ESP32-OTA=esp32-ota-20220618-v1.19.1.bin
+ESP32-OTA=esp32-ota-20230426-v1.20.0.bin
 
 ## D2WD
 ESP32-D2WD=esp32-d2wd-20220618-v1.19.1.bin
