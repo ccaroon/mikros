@@ -28,3 +28,4 @@ LED Matrix Driver Board
 * DisplayIO:
   - https://docs.circuitpython.org/en/latest/shared-bindings/displayio/
   - https://learn.adafruit.com/circuitpython-display-support-using-displayio
+* Matrices with CPy: https://learn.adafruit.com/rgb-led-matrices-matrix-panels-with-circuitpython
