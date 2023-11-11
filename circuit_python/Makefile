@@ -2,6 +2,13 @@ MAC_PORT = "/dev/tty.SLAB_USBtoUART"
 LNX_PORT = "/dev/ttyACM0"
 PORT = $(LNX_PORT)
 
+
+usage:
+	@echo "* shell"
+	@echo "* upload-as-main FILE=<file>"
+	@echo "* upload-file FILE=<file>"
+	@echo "* secrets"
+
 shell:
 	picocom $(PORT) -b115200
 
