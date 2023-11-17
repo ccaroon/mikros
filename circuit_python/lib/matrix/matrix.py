@@ -3,10 +3,10 @@ import displayio
 import rgbmatrix
 import framebufferio
 
-def matrix_64x32():
+def matrix_64x32(bit_depth=4):
     displayio.release_displays()
     matrix = rgbmatrix.RGBMatrix(
-        width=64, bit_depth=4,
+        width=64, bit_depth=bit_depth,
         rgb_pins=[
             board.MTX_R1,
             board.MTX_G1,
@@ -29,10 +29,10 @@ def matrix_64x32():
 
     return display
 
-def matrix_64x64():
+def matrix_64x64(bit_depth=4):
     displayio.release_displays()
     matrix = rgbmatrix.RGBMatrix(
-        width=64, height=64, bit_depth=4,
+        width=64, height=64, bit_depth=bit_depth,
         rgb_pins=[
             board.MTX_R1,
             board.MTX_G1,
