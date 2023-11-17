@@ -5,7 +5,8 @@ import time
 import matrix
 
 
-display = matrix.matrix_64x64()
+display = matrix.matrix_64x32()
+# display = matrix.matrix_64x64()
 # print(f"W: {display.width} x H: {display.height}")
 # print(type(display))
 # print(dir(display))

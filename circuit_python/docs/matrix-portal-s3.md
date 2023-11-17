@@ -6,6 +6,26 @@ LED Matrix Driver Board
 * Tutorial: https://learn.adafruit.com/adafruit-matrixportal-s3
 * Bootloader Repair: https://learn.adafruit.com/adafruit-matrixportal-s3/factory-reset#factory-reset-and-bootloader-repair-3107941
 * Python: https://circuitpython.org/board/adafruit_matrixportal_s3/
+* Install CPy:
+  - https://learn.adafruit.com/adafruit-matrixportal-s3/install-circuitpython
+  - https://learn.adafruit.com/welcome-to-circuitpython/installing-circuitpython
+
+
+## Bootloader Repair
+https://learn.adafruit.com/adafruit-matrixportal-s3/factory-reset#factory-reset-and-bootloader-repair-3107941
+
+1. Find or [Download the Reset File](https://github.com/adafruit/Adafruit-MatrixPortal-S3-PCB/raw/main/factory-reset/MatrixPortal_S3_FactoryReset.bin)
+2. Plug board into USB port on your computer using a data/sync cable.
+3. Enter ROM Bootloader
+   1. Press and hold the BOOT/DFU button down. Don't let go of it yet!
+   2. Press and release the Reset button. You should still have the BOOT/DFU button pressed while you do this.
+   3. Now you can release the BOOT/DFU button.
+   4. No lights change color or any other indicator.
+4. Check connection: `esptool.py --port /dev/ttyACM0 chip_id`
+5. Erase the Flash: `esptool.py --port /dev/ttyACM0 erase_flash`
+6. Install Bootloader: `esptool.py --port /dev/ttyACM0 write_flash 0x0 MatrixPortal_S3_FactoryReset.bin`
+7. Reset by pressing the Reset Button
+8. Next, [Install Circuit Python](https://learn.adafruit.com/adafruit-matrixportal-s3/install-circuitpython)
 
 ## Info
 * Port: /dev/ttyACM0
