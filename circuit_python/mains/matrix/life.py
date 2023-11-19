@@ -1,14 +1,12 @@
 # SPDX-FileCopyrightText: 2020 Jeff Epler for Adafruit Industries
 #
 # SPDX-License-Identifier: MIT
-
 import random
 import time
 
-import board
 import displayio
 
-import matrix
+import led_matrix
 # import framebufferio
 # import rgbmatrix
 
@@ -85,7 +83,7 @@ def conway(output):
 #     addr_pins=[board.A5, board.A4, board.A3, board.A2],
 #     clock_pin=board.D13, latch_pin=board.D0, output_enable_pin=board.D1)
 # display = framebufferio.FramebufferDisplay(matrix, auto_refresh=False)
-display = matrix.matrix_64x64(bit_depth=1)
+display = led_matrix.init_64x64(bit_depth=1)
 SCALE = 1
 b1 = displayio.Bitmap(display.width//SCALE, display.height//SCALE, 2)
 b2 = displayio.Bitmap(display.width//SCALE, display.height//SCALE, 2)

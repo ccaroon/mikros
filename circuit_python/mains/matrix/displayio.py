@@ -2,11 +2,11 @@
 import displayio
 import time
 
-import matrix
+import led_matrix
 
 
-display = matrix.matrix_64x32()
-# display = matrix.matrix_64x64()
+display = led_matrix.init_64x32()
+# display = led_matrix.init_64x64()
 # print(f"W: {display.width} x H: {display.height}")
 # print(type(display))
 # print(dir(display))
