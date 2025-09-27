@@ -63,7 +63,7 @@ install-firmware-esp8266: download-firmware-esp8266
 # RP2040 ----------------------------------------------------------------------
 ## SparkFun Pro Micro
 ##   - AdaFruit KB2040 (Kee Boar Driver)
-RP2040-PROMICRO=SPARKFUN_PROMICRO-20220618-v1.19.1.uf2
+RP2040-PROMICRO=SPARKFUN_PROMICRO-20250911-v1.26.1.uf2
 
 ## AdaFruit ItsyBitsy
 RP2040-ITSYBITSY=ADAFRUIT_ITSYBITSY_RP2040-20220618-v1.19.1.uf2
