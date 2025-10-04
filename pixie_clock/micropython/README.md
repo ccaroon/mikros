@@ -6,6 +6,10 @@
 * https://github.com/mcauser/micropython-74hc595
 
 
+## Requirements.txt
+* mpremote mip install github:mcauser/micropython-74hc595
+
+
 ### Hardware Connection
 
     VCC and GND:
