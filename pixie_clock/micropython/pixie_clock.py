@@ -9,8 +9,8 @@ SR_COUNT = 2
 def run():
     # Init Shift Register
     spi = SPI(1, 1000000)
-    rclk = Pin("D5", Pin.OUT)
-    sr = SR74HC595_SPI(spi, rclk, SR_COUNT)
+    latch = Pin("D5", Pin.OUT)
+    sr = SR74HC595_SPI(spi, latch, SR_COUNT)
 
     # Init RTC
     rtc = RTC()

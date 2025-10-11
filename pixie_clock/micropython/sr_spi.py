@@ -5,16 +5,13 @@ import digits
 
 spi = SPI(1, 1000000)
 
-
-
-
 # latch
-rclk = Pin("D5", Pin.OUT)
+latch = Pin("D5", Pin.OUT)
 
 # oe = Pin(33, Pin.OUT, value=0)    # low enables output
 # srclr = Pin(32, Pin.OUT, value=1) # pulsing low clears data
 
-sr = SR74HC595_SPI(spi, rclk, 1) # chain of 2 shift registers
+sr = SR74HC595_SPI(spi, latch, 1) # chain of 2 shift registers
 
 # sr.pin(2,1)  # set pin 2 high of furthest shift register
 # sr.pin(2)    # read pin 2
