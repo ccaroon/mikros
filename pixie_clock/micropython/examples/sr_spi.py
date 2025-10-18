@@ -3,10 +3,10 @@ from sr74hc595 import SR74HC595_SPI
 
 import digits
 
-spi = SPI(1, 1000000)
+spi = SPI(1, 1000000, mosi=18, sck=5, miso=19)
 
 # latch
-latch = Pin("D5", Pin.OUT)
+latch = Pin(15, Pin.OUT)
 
 # oe = Pin(33, Pin.OUT, value=0)    # low enables output
 # srclr = Pin(32, Pin.OUT, value=1) # pulsing low clears data

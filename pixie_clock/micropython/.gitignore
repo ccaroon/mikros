@@ -1,2 +1,5 @@
 .firmware
 *.mpy
+SECRETS.py
+SETTINGS.py
+settings.toml

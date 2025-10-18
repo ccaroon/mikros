@@ -8,6 +8,7 @@
 
 ## Requirements.txt
 * mpremote mip install github:mcauser/micropython-74hc595
+* wget https://raw.githubusercontent.com/BrianPugh/micropython-tomli/refs/heads/master/src/tomli/_parser.py -O lib/tomli.py
 
 
 ### Hardware Connection
