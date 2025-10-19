@@ -1,0 +1,13 @@
+---
+package: pixie_clock
+main: main.py
+boot: boot.py
+# Local Libs
+libs:
+  - chronos.py
+  - config.py
+  - SETTINGS.py
+  - wifi.py
+# MIP Installs
+requirements:
+  - github:mcauser/micropython-74hc595
