@@ -1,6 +1,16 @@
 # Pixie Clock // Micropython Version
 
 
+## PCB Design, etc...
+* https://docs.kicad.org/9.0/en/getting_started_in_kicad/getting_started_in_kicad.html
+
+### PCB Printers
+* https://rushpcb.com
+* https://www.pcbunlimited.com
+* https://jlcpcb.com
+* https://oshpark.com <-- Used Before
+
+
 ## Shift Register Info
 * Google: "how to use shift register with micropython"
 * https://github.com/mcauser/micropython-74hc595
